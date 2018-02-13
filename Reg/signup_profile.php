@@ -80,7 +80,8 @@
                 
                 <br/>
                     <!-- Skip Profile link -->
-                    <a style="color: #5fbac2;" href="#">Skip</a><br/><br/><br/><br/>
+                    <a style="color: #5fbac2;" 
+                       href="../Reg/signup_done.php">Skip</a><br/><br/><br/><br/>
               </div><!-- end text center -->
           </form>
           

@@ -1,0 +1,19 @@
+This is a map of the user flow through the signup screens.
+
+
+login.php >> signup.php >> signup_script.php >> signup_profile.php >> signup_profile_script.php >> signup_done.php >> signup_done_script.php
+
+Users are led to signup through the login screen when they press "New User?".
+
+**Please note that all script pages are backend, not user facing. On these pages, data is verified by the server (php), and stored into the current session. On the final script page, "signup_done_script.php" all data is compiled and uploaded the database.
+
+SIGNUP.PHP -- this page collects USERNAME, EMAIL, and PASSWORD, these three elements are REQUIRED to create a profile. This is the only mandatory page during the signup process.
+
+SIGNUP_PROFILE.PHP -- this page collects FIRSTNAME, LASTNAME, PHONE NUMBER, and ZIP. This page can be skipped. Information is not mandatory, however to have a complete profile it is recommended. there should be a prompt if someone tries to skip this.
+    
+    Prompt: Are you sure you want to skip this? This will help your friends find you easier. If you change your mind, you can alwasy add this later.
+    
+SIGNUP_DONE.PHP -- This is the welcome screen, it also presents user oppurtinity to verify their phone and email for two-factor authentication.
+    
+    *NOTE* -- to sort out spam users and account abusers, we may wish to require email and phone verification***
+

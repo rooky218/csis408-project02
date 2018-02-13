@@ -21,7 +21,7 @@
 <body id="login-bg">
 
     <!-- page header -->
-    <div style="height:250px;">
+    <div class="top-m">
         <br/><br/><br/><br/><br/>
         <h1 class="text-center" style="color: white;">Chat App</h1>
     </div>

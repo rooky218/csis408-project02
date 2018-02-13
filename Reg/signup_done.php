@@ -22,21 +22,20 @@
       
       <div class="container" style="padding: 30px;">
            
-          <h2 class="text-center test" style="">Welcome to Chat App!</h2>
+          <h2 class="text-center test">Welcome to Chat App!</h2>
           <br/>
           
-          <h3>What next?</h3>
+          <h4 class="text-center test">What next?</h4>
           
-          <p>We know your time is important to you, so when you get the time, confirm your email and set up Two Factor Authentication. You can do this at anytime in your profile.</p>
+          <p class="test">We know your time is important, so when you have the time, confirm your email and phone number. This is really important in case you forget your login.</p>
+          
+          <br/>
           
           <!-- Start Texting -->
-          <a class="btn btn-default btn-lg btn-block" 
-                     href="../Main/main.php">Start Texting</a> <!-- back to login.php -->
+          <a id="login-submit" 
+             class="btn btn-default btn-lg btn-block"         
+             href="../Main/main.php">Start Chatting</a> <!-- back to login.php -->
           
           <!-- Confirm your phone -->
           <a class="btn btn-default btn-lg btn-block" 
-                     href="../Reg/signup.php">Verify Phone</a> <!-- back to login.php -->
-          
-          <!-- Confirm your email -->
-          <a class="btn btn-default btn-lg btn-block" 
-                     href="../Reg/signup.php">Verify Email</a> <!-- back to login.php -->
+             href="../Reg/signup.php">Verify Info</a> <!-- back to login.php -->

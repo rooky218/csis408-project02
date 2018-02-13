@@ -111,6 +111,8 @@
                 Too many logins attempted, please try again later
               </div>
 
+              
+              <!-- buttons -->
               <div class="text-center">
                 
                   <button id="login-submit" 

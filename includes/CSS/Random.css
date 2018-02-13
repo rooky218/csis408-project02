@@ -35,9 +35,11 @@ input.login-ben, input.signup-ben {
     font-family: 'Roboto', sans-serif;
 }
 
+/****** brand color button style *****/
 #login-submit {
     background-color: #77E9F3; 
     border: none;
+    color: #242f2c;
 }
 
 
