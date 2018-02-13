@@ -32,7 +32,7 @@
                 name="signup-frm" 
                 onsubmit="return validateForm()">
                 
-                <!--First Name Input -->
+                <!--User Name Input -->
                 <label for="Username"
                        class="label-input-style">Username</label>
                 <input type="text" 
