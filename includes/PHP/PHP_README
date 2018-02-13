@@ -1,0 +1,5 @@
+most php scripting files are located in their corresponding directored, or coded directly into their page.
+
+In some cases, an external php script may be used as needed.
+
+functions.php -- this should be REQUIRED, this will include a library of functions need to run a page

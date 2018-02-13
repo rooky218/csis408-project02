@@ -1,0 +1,7 @@
+funtions.js -- this is a compilation of random javascript funtions that will be needed on a variety of pages. include this file to access funtions
+
+login.js -- this is the script needed to verifiy input, and output errors on the login.php page.
+
+signup.js -- this is the script needed to verifiy input, and output errors on the signup.php page.
+
+signup_profile.js -- this is the script needed to verifiy input, and output errors on the signup_profile.php page.

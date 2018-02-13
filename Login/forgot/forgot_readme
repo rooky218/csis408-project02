@@ -1,0 +1,11 @@
+If a user forgets his password, he can recover it by clicking the "Forgot Password" link on the login page.
+
+login.php >> forgot_r1.php >> forgot_r1_script.php >> forgot_r2.php >> forgot_r2_script.php >> forgot_r3.php >> forgot_r3_script.php >> main.php
+
+FORGOT_R1.PHP -- presents user the option to verify their phone or email. User must enter their email or phone to proceed. If entered info is not on website, then the user cannot proceed.
+
+FORGOT_R2.PHP --  prompts user to enter the code sent the the email or phone. Code is verified against the code generated and stored in the session data from _R1_script.php.
+
+FORGOT_R3.PHP -- if code is confirmed, then user is greated and allowed to reset their password. Otherwise they are encouraged to try again, or create a new account
+
+>> main.php
