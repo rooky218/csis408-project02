@@ -79,3 +79,94 @@ input.login-ben, input.signup-ben {
     padding-bottom: 2px;
 }
 
+/************ profile page **************/
+
+div.account-background {
+    /*profile image background*/
+    background: url(../photos/19884356_10154716410676409_7622955142588271372_n.jpg);
+    background-repeat: no-repeat;
+    background-position: center top;
+    background-attachment: fixed;
+    -webkit-background-size: contain;
+    -mox-background-size: contain;
+    -o-background-size: contain;
+    background-size: contain;
+     font-family: 'Roboto', sans-serif;
+    
+    /** add blur **/
+    -webkit-filter: blur(5px);
+    -moz-filter: blur(5px);
+    -o-filter: blur(5px);
+    -ms-filter: blur(5px);
+    filter: blur(5px);
+   
+    
+    /*box size*/
+    height: 400px;
+    width: auto;
+    margin: 0;
+    padding: 0;
+    
+    
+    position: relative;
+    top: 0;
+    left: 0;
+    z-index: -10;
+
+    
+}
+
+div.account-transparent {
+    background-color: black;
+    opacity: 0.6;
+    filter: alpha(opacity=60); /* For IE8 and earlier */
+    height: 410px;
+    width: 100%;
+    margin: 0;
+    padding: 0; 
+    
+    
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1
+}
+
+div.content-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 5;
+    
+    width: 100%;
+    height: 400px;
+    
+    text-align: center;
+    color: white;
+}
+
+.content-container img {
+    margin: 10px;
+}
+
+a.ben-back-icon {
+    position: relative;
+    left: 20px;
+    top: 20px;  
+    color: hotpink;
+}
+
+i.icons-1 {
+    /** new message **/
+    position: absolute;
+    top: 355px;
+    left: 50px;
+    font-size: 20pt;
+    color: #adadad;
+}
+
+.test-2 {
+    color: white;
+    
+}
+
