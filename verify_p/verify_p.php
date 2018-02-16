@@ -7,7 +7,7 @@
     }
 
     //if not logged in add header
-    $title = "Verify your Email"; //set page title
+    $title = "Verify your Phone"; //set page title
     require("../includes/headers/header_main.php");
 
     //load functions
@@ -17,9 +17,11 @@
     $user_code = $_POST["confirm_code"];
     $invalid_code = false;
     $change_display = false;
+    $match = false;
 
-    //echo for testing
-    echo "<p class='test'> " . $_SESSION["verify_email"] . "</p>";
+    //testing only
+    echo "<p class='test'>" . $_SESSION["code_array"][3] . "</p>";
+    $_SESSION["phoneInA"] = 4342197737;
 
     //set or add to counter
     //counter counts how many times a user has submitted a code
@@ -27,36 +29,33 @@
     //NOTE: this is not the best way to count this, session
     //can be reset by user, ideally, we would update the DB
     //with each count
-    if(myisset($_SESSION['load_counter'])){
-      $_SESSION['load_counter'] = $_SESSION['load_counter'] + 1;
+    if(myisset($_SESSION['counter_pv'])){
+      $_SESSION['counter_pv'] = $_SESSION['counter_pv'] + 1;
     } else {
-      $_SESSION['load_counter'] = 1;
+      $_SESSION['counter_pv'] = 1;
     }
 
+    if($_SESSION['counter_pv'] <= 4){
 
-    //if user attempts to resend 3 times - lock account
-    // 4 is used because on first load, counter starts at 1
-    //thus allowing 3 attempts
-    if($_SESSION['load_counter'] <= 4){
-      //compare results
+      //if form data submitted...
       if(myisset($user_code)){
         //if user form submitted
-        if($_SESSION["verify_email"] == $user_code){
-            //if code matched
-            //submit query to DB with verified status
+        for($i = 0; $i < 18; $i++){
+          //run loop until match is found
+          if($_SESSION["code_array"][$i] == $user_code){
+            //if match Confirmed
+            $phone_code_confirmed = $_SESSION["code_array"][$i];
+            $phone_address_confirmed = $_SESSION["address_array"][$i];
+            //UPLOAD CONFIRMED TO DB
 
-            //unset variables
-            unset($_SESSION["verify_email"]);
-            unset($_POST["confirm_code"]);
+            //send to confirm message page
+            header("location: ./verify_p_confirm.php");
+          }//end if
+        }//end for loop
 
-            //redirect to confirm screen
-            header("location: ./verify_confirm.php");
-
-        } else {
-            //if code does not match
-            //return error message
-            $invalid_code = true;
-        }
+        //script only gets this far IF match not found
+        //return error message
+        $invalid_code = true;
       }
     } else {
       //user has made 3 attempts
@@ -64,6 +63,11 @@
       //$invalid_exceeded_attempts = true;
       $change_display = true;
     }
+
+    //if user attempts to resend 3 times - lock account
+    // 4 is used because on first load, counter starts at 1
+    //thus allowing 3 attempts
+
 
 
  ?>
@@ -93,10 +97,10 @@
 
                 echo "<br/>";
 
-                echo "<h4 class='text-center test'>An email has been sent to:<br/><br/>
+                echo "<h4 class='text-center test'>An text has been sent to:<br/><br/>
                   <strong>
-                    <span style='color: #77E9F3;'>" . $_SESSION["emailInS"] . "</span></strong><br/><br/>
-                  Please enter the 6 digit code to verify your email address.
+                    <span style='color: #77E9F3;'>" . $_SESSION["phoneInS"] . "</span></strong><br/><br/>
+                  Please enter the 6 digit code to verify your phone number.
                 </h4>";
 
               } else {
@@ -116,7 +120,7 @@
 
           <form id=""
                 method="post"
-                action="verify.php"
+                action="verify_p.php"
                 name="signup-frm"
                 style="<?php
                   if($change_display == true){

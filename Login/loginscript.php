@@ -1,4 +1,5 @@
-<!-- This checks POST data from login.php against Database. If login works, this should lead to main.php. -->
+<!-- This checks POST data from login.php against Database. If login works,
+this should lead to main.php. -->
 <?php
 
     session_start(); //start session

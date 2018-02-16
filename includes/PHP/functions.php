@@ -43,6 +43,11 @@
 		}
 	}//end myisset
 
+function codeGen($xin, $yin){
+
+	
+}
+
 
 	function hitcounter($page){
 

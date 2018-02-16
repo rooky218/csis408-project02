@@ -10,6 +10,8 @@
     $title = "Email Confirmed!"; //set page title
     require("../includes/headers/header_main.php");
 
+
+
  ?>
 
  <h1>Confirmed</h1>
