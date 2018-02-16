@@ -13,33 +13,53 @@
     //load functions
     require("../includes/PHP/functions.php");
 
-    //set variables
+    //reset variables, if page is reloaded this will clear out values
+    $userNameIn = "";
+    $emailIn = "";
+    $password1In = "";
+    $password2In = "";
+    $password_no_match = false; //return bool for password no match
+    $username_taken = false; //return for taken userName
+    $invalid_entry = false; //return for error on entry (bad characters, unallowed characters etc)
+
+    //set inputs variables
     $userNameIn = $_POST["username"];
     $emailIn = $_POST["email"];
     $password1In = $_POST["password1"];
     $password2In = $_POST["password2"];
 
+
     //check null
-    if(myisset($userNameIn) && myisset($emailIn) && myisset($password1In) && myisset($password2In)){
+    if(myisset($userNameIn)
+    && myisset($emailIn)
+    && myisset($password1In)
+    && myisset($password2In)){
         //if all values set, next confirm password
-        echo "All fields entered
-        <br/>Username: " . $userNameIn .
-            "<br/> Email: " . $emailIn .
-            "<br/>Password 1: " . $password1In .
-            "<br/>Password 2: " . $password2In;
 
         if($password1In == $password2In){
             //if password match, check db if Username is taken
             echo "passwords match";
-            if(username){
+            if(1 == 1){
+                //1 == 1 is a temporary thing, this will be changed out
+                //for a query to check the username availablilty in the database
                 //if username available, save user data into session
+                $_SESSION["userNameInS"] = $userNameIn;
+                $_SESSION["emailInS"] = $emailIn;
+                $_SESSION["passwordInS"] = $password1In;
+
+                //continue to next page
+                header("location: ./../Reg/signup_profile.php");
 
             } else {
                 //username taken
+                $username_taken = true; //trigger error message
+                echo "Username already taken";
             }
 
         } else {
             //password did not match
+            $password_no_match = true; //trigger error message
+            echo "password does not match";
         }
 
     }
@@ -73,7 +93,7 @@
                        id="userName"
                        class="form-control signup-ben"
                        name="username"
-                       value="<?php echo $_SESSION["return_fn"];?>"
+                       value="<?php echo $userNameIn;?>"
                        placeholder="WingMan234">
 
                 <!--Email Input -->
@@ -83,7 +103,7 @@
                        id="email"
                        class="form-control login-ben"
                        name="email"
-                       value="<?php echo $_SESSION["return_em"];?>"
+                       value="<?php echo $emailIn;?>"
                        placeholder="john@domain.com">
 
 
@@ -94,7 +114,7 @@
                        id="password1"
                        class="form-control signup-ben"
                        name="password1"
-                       value="<?php echo $_SESSION["return_pw"];?>"
+                       value="<?php echo $password1In;?>"
                        placeholder="">
 
                 <!--Password Input -->
@@ -104,23 +124,26 @@
                        id="password2"
                        class="form-control signup-ben"
                        name="password2"
-                       value="<?php echo $_SESSION["return_pw"];?>">
+                       value="<?php echo $password2In?>">
 
               <br/><br/>
 
 
               <!-- php triggered errors -->
               <?php
-                if($_SESSION["error_incorrect"] == true){
-                  echo "<div class='alert alert-danger'>Username or password is incorrect</div>";
+                if($password_no_match == true){
+                  echo "<div class='alert alert-danger'>Passwords do not match</div>";
                 }
 
-                if($_SESSION["error_missing"] == true){
-                  echo "<div class='alert alert-danger'>Please fill in all the fields</div>";
+                if($username_taken== true){
+                  echo "<div class='alert alert-danger'>That username is not available</div>";
                 }
 
-                if($_SESSION["error_nouser"] == true){
-                  echo "<div class='alert alert-danger'>Username does not exist</div>";
+                if($invalid_entry == true){
+                  echo "<div class='alert alert-danger'>Oops, that doesn't seem right. Please do not use these characters</div>";
+                }
+                if($invalid_entry == true){
+                  echo "<div class='alert alert-danger'>Oops, that doesn't seem right. Please do not use these characters</div>";
                 }
               ?>
 

@@ -6,7 +6,7 @@
     color: white;
     display: block;
     float: left;
-    
+
 }
 
 /*******Login Page background***********/
@@ -37,15 +37,15 @@ input.login-ben, input.signup-ben {
 
 /****** brand color button style *****/
 #login-submit {
-    background-color: #77E9F3; 
+    background-color: #77E9F3;
     border: none;
     color: #242f2c;
 }
 
 
 /* enable absolute positioning */
-.inner-addon { 
-    position: relative; 
+.inner-addon {
+    position: relative;
 }
 
 /* style icon */
@@ -92,28 +92,28 @@ div.account-background {
     -o-background-size: contain;
     background-size: contain;
      font-family: 'Roboto', sans-serif;
-    
+
     /** add blur **/
-    -webkit-filter: blur(5px);
-    -moz-filter: blur(5px);
-    -o-filter: blur(5px);
-    -ms-filter: blur(5px);
-    filter: blur(5px);
-   
-    
+    -webkit-filter: blur(10px);
+    -moz-filter: blur(10px);
+    -o-filter: blur(10px);
+    -ms-filter: blur(10px);
+    filter: blur(10px);
+
+
     /*box size*/
     height: 400px;
     width: auto;
     margin: 0;
     padding: 0;
-    
-    
+
+
     position: relative;
     top: 0;
     left: 0;
     z-index: -10;
 
-    
+
 }
 
 div.account-transparent {
@@ -123,9 +123,9 @@ div.account-transparent {
     height: 410px;
     width: 100%;
     margin: 0;
-    padding: 0; 
-    
-    
+    padding: 0;
+
+
     position: absolute;
     top: 0;
     left: 0;
@@ -137,10 +137,10 @@ div.content-container {
     top: 0;
     left: 0;
     z-index: 5;
-    
+
     width: 100%;
     height: 400px;
-    
+
     text-align: center;
     color: white;
 }
@@ -152,7 +152,7 @@ div.content-container {
 a.ben-back-icon {
     position: relative;
     left: 20px;
-    top: 20px;  
+    top: 20px;
     color: hotpink;
 }
 
@@ -167,6 +167,5 @@ i.icons-1 {
 
 .test-2 {
     color: white;
-    
-}
 
+}
