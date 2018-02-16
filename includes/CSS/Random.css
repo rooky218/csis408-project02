@@ -35,6 +35,20 @@ input.login-ben, input.signup-ben {
     font-family: 'Roboto', sans-serif;
 }
 
+/************* Form styling - verify code *****/
+input.verify-phone-ben, input.verify-email-ben {
+    outline: none;
+    box-shadow: none;
+    background-color: transparent;
+    border: none;
+    border-bottom: solid 1px #adadad;
+    border-radius: 0px;
+    color: #adadad;
+    font-size: 28pt;
+    font-family: 'Roboto', sans-serif;
+    text-align: center;
+}
+
 /****** brand color button style *****/
 #login-submit {
     background-color: #77E9F3;

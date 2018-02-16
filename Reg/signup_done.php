@@ -76,3 +76,6 @@
           <!-- Confirm your phone -->
           <a class="btn btn-default btn-lg btn-block"
              href="../Reg/signup.php">Verify Info</a> <!-- back to login.php -->
+
+  </body>
+  </html>
