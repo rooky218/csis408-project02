@@ -1,0 +1,34 @@
+Verify_p is the phone portion of verification. The other directory /verify/
+contains email verification
+
+VERIFY_P_GENERATE.PHP -- This page generates the confirmation code, no
+frontend visibility, user is automatically redirected to verify.php.
+
+  LINKS IN:
+          /Reg/signup_done.php        (if user wants to verify on signup)
+          /Account/dashboard.php      (if user wants to verify)
+          /verify_p.php               (if user is having trouble and clicks resend code link)
+
+  LINKS OUT:
+          /verify_p.php                 (automatically redirects)
+
+VERIFY_P.PHP -- This page generates the input, and also compares results. If user
+exceeds 3 attempts, page is locked down for 12 hours.
+
+  LINKS IN:
+          /verify_p_generate.php        (automatic redirect)
+
+  LINKS OUT:
+          /verify_p_confirm.php         (if successful code match)
+          /verify_p_generate.php        (if user needs new code sent)
+          ../Account/dashboard.php    (if user clicks BACK or gets locked out)
+
+VERIFY_P_CONFIRM.PHP -- Outputs confirmation message, button to encourage phone
+verification (if not yet done) and button to redirect to user dashboard.
+
+  LINKS IN:
+        /verify_p.php                   (automatic redirect)
+
+  LINKS OUT:
+        ../verify/verify_generate.php  (if user opts to verify email)
+        ../Account/dashboard.php      (if user returns to dashboard)

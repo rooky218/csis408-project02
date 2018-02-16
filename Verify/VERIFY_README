@@ -1,3 +1,6 @@
+Directory /verify/ contains email verification. The other Directory
+/verify_p/ contains phone verification
+
 VERIFY_GENERATE.PHP -- This page generates the confirmation code, no frontend
 visibility, user is automatically redirected to verify.php.
 
@@ -27,5 +30,5 @@ verification (if not yet done) and button to redirect to user dashboard.
         /verify.php                   (automatic redirect)
 
   LINKS OUT:
-        ../veriy_p/verify_p_generate.php (if user opts to verify phone number)
+        ../verify_p/verify_p_generate.php (if user opts to verify phone number)
         ../Account/dashboard.php      (if user returns to dashboard)
