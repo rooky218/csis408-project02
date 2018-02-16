@@ -1,0 +1,28 @@
+These are the sections of code that I have written that access
+the database.
+
+DBLOGIN.PHP -- this page is critical. There should be two of these.
+one file is for our localhost login. The other is for the website.
+Since the login cannot be the same for these two databases, include
+both files in the DB folder.
+
+in the file, the variable $my_db is set, which includes the login
+credentials
+
+On any page where we write code that accesses the database,
+we much use the line:
+    require(../includes/PHP/DB/dblogin.php);
+this will force the page to load the login credentials for the databases
+
+When examining the code (lets say from loginscript.php) the
+database is logged into on line 15 when the variable $my_db
+is called.
+
+The line $r = @mysqli_query($my_db, $q); will run any query that is
+stored in $q
+
+parameter $my_db contains login credentials
+parameter $q has the prebuilt query
+and the new variable $r is where the results are stored.
+once the results are pulled, we break apart the array with the command
+$mysquli_fetch_array($r, MYSQLI_ASSOC);
