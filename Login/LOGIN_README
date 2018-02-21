@@ -1,23 +1,43 @@
-LOGIN.PHP -- User can login on this page. They can also choose to signup, or if
-they forgot their password they can request a reset link.
+USERFLOW --
 
-      login.php --> ../REG/signup.php           (new user sign up)
-      login.php --> /loginscript.php            (log existing users in)
-      login.php --> ../Forgot/reset.php         (send reset password to user)
-
-LOGINSCRIPT.PHP -- This page is VERY important for backend functionality. Here,
-user login data is verified. If it is correct, user data is pulled from the DB
-and loaded into a session. USER status is set to "LOGGED_IN", which will affect
-access to other pages.
-
-*** NOTE *** if user data is not set on this page, the other pages will not be accessable
-also, PHP scripts that require SESSION data will not work.
-
-      loginscript.php --> ../Main/main.php      (if login success)
-      loginscript.php --> /login.php            (if login failed, allow up to 3 tries per 12 hours)
+   login.php >>
+   loginscript.php >>
+   main.php
 
 
+LOGIN.PHP -- User can login on this page. They can also choose to
+signup, or if they forgot their password they can request a reset
+link.
+
+   --LINKS IN--
+   /welcome.php
+
+   --LINKS OUT--
+   ../Reg/signup.php   (new user sign up)
+   /loginscript.php    (log existing users in)
+   ../Forgot/reset.php (send reset password to user)
+
+
+LOGINSCRIPT.PHP -- This page is VERY important for backend
+functionality. Here, user login data is verified. If it is correct,
+user data is pulled from the DB and loaded into a session. USER status
+is set to "LOGGED_IN", which will affect access to other pages.
+
+*** NOTE *** if user data is not set on this page, the other pages
+will not be accessible also, PHP scripts that require SESSION data
+will not work.
+
+   --LINKS IN--
+   login.php (page scripting)
+
+   --LINKS OUT--
+   ../Main/main.php  (if login success)
+   /login.php        (if login failed, allow up to 3 tries per 12 hours)
+
+
+(move this to the account folder)
 LOGOUT.PHP -- if a user wants to log out, all session data is reset and they are
 sent back to login.php
 
-      logout.php --> /login.php                 (if user logs out)
+--LINKS IN--
+/Account/dashboard.php   (if user logs out)

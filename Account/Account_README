@@ -1,0 +1,19 @@
+USERFLOW --
+
+   dashboard.php leads to every other page 
+
+DASHBOARD.PHP -- this page is the users main page. A variation of this
+page will be used when visiting other user pages. From here a user
+can view their information, edit profile content, and manage their account
+
+   --LINKS IN--
+   /Main/main.php
+
+   --LINKS OUT--
+   /password_reset.php (change password)
+   /edit_info.php (edit location, photo, name, username, phone, and email)
+   /edit_settings.php (settings may be rolled into main page?)
+   /contact_dev.php (contact developer)
+   /help_info.php (FAQ about app, common issues, etc)
+   /logout.php (logout of account)
+   /delete.php (delete account)

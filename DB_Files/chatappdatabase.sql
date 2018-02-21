@@ -65,13 +65,3 @@ MessageID int,
 FileName varchar(20),
 constraint FK_MessageID foreign key (MessageID) references Messages (MessageID)
 on delete cascade on update cascade);
-
-
-
-
-
-
-
-
-
-
