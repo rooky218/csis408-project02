@@ -1,3 +1,4 @@
+create database ChatApp;
 
 use ChatApp;
 
@@ -10,7 +11,7 @@ LastName varchar(20),
 Username varchar(20),
 Email varchar(30),
 Password varchar(20),
-constraint Pk_UserID primary key (UserID));
+constraint Pk_UserID primary key (UserID)) ENGINE = INNODB;
 
 create table Logins
 (
@@ -18,21 +19,21 @@ UserID int,
 FailedAttempts int,
 SuccessfulAttempts int,
 constraint fk_LoginID foreign key (UserID) references Users (UserID),
-constraint pk_LoginID primary key (UserID));
+constraint pk_LoginID primary key (UserID)) ENGINE = INNODB;
 
 create table UserStatus
 (
 UserID int,
 UserStatus varchar(20),
 constraint fk_status foreign key (UserID) references Logins (UserID)
-);
+) ENGINE = INNODB;
 
 create table Groups
 (GroupID int not null,
 GroupName varchar (20) not null,
 CreateDate date,
 Active bool,
-constraint Pk_GroupID primary key (GroupID));
+constraint Pk_GroupID primary key (GroupID)) ENGINE = INNODB;
 
 create table UserGroups
 (GroupID int,
@@ -40,7 +41,7 @@ UserID int,
 constraint fk_GroupID foreign key (GroupID) references Groups (GroupID),
 constraint fk_UserID foreign key (UserID) references Users (UserID),
 constraint PK_UserNGroups primary key (GroupID, UserID)
-);
+) ENGINE = INNODB;
 
 create table Messages
 (
@@ -52,8 +53,7 @@ constraint fk_messagerecipient foreign key (RecipientID) references Users (UserI
 constraint PK_Messages primary key (MessageID),
 ParentMessageID int,
 TextBody varchar(500),
-DeliverTime timestamp,
-DeliverDate date);
+DeliverTime timestamp) ENGINE = INNODB;
 
 create table MessageRecipients
 (
@@ -67,7 +67,7 @@ constraint fk_senderID foreign key (SenderID) references Messages (UserID),
 constraint fk_recipientID foreign key (RecipientID) references Messages (RecipientID),
 constraint PK_MessageRecipients primary key (MessageID, SenderID, RecipientID, GroupID)
 
-);
+) ENGINE = INNODB;
 
 create table Photos
 (
@@ -76,6 +76,8 @@ constraint PK_PhotoID primary key (PhotoID),
 MessageID int,
 FileName varchar(20),
 constraint FK_PhotoMessageID foreign key (MessageID) references Messages (MessageID)
-);
+) ENGINE = INNODB;
+
+
 
 
