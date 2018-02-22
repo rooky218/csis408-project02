@@ -1,4 +1,3 @@
-create database ChatApp;
 
 use ChatApp;
 
@@ -53,7 +52,12 @@ constraint fk_messagerecipient foreign key (RecipientID) references Users (UserI
 constraint PK_Messages primary key (MessageID),
 ParentMessageID int,
 TextBody varchar(500),
+<<<<<<< HEAD
 DeliverTime timestamp) ENGINE = INNODB;
+=======
+DeliverTime timestamp,
+DeliverDate date);
+>>>>>>> 8c69f638cdd979d0df5c9ef53067586d1f293ff7
 
 create table MessageRecipients
 (
@@ -76,6 +80,10 @@ constraint PK_PhotoID primary key (PhotoID),
 MessageID int,
 FileName varchar(20),
 constraint FK_PhotoMessageID foreign key (MessageID) references Messages (MessageID)
+<<<<<<< HEAD
 ) ENGINE = INNODB;
+=======
+);
+>>>>>>> 8c69f638cdd979d0df5c9ef53067586d1f293ff7
 
 

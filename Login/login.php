@@ -5,13 +5,38 @@
 
   //check if already logged in
   if($_SESSION["LOGGED_IN"] == true){
-    header("location: ./../index.php");
-    $_SESSION["Alert_already_logged_in"] = true;
+    //if logged in, redirect to main page
+    //header("location: ./../Main/main.php");
   }
 
   //Set Page title and load header
   $title = "Login"; //set page title
   require("../includes/headers/header_main.php");
+
+  //load functions
+  require("../includes/PHP/functions.php");
+
+  //set variables
+  $username_login = $_POST["username"];
+  $password_login = $_POST["password"];
+  $missing_password = false;
+  $missing_username = false;
+  $invalid_password = false;
+  $invalid_username = false;
+  $did_not_exist = false;
+
+  //check for POST Data
+  if(myisset($username_login && $password_login)){
+    //if POST is set -- run db login query
+    require("../includes/PHP/DB/loginscript.php");
+
+  } elseif(myisset($username_login)){
+    //return error - password missing
+    $missing_password = true;
+  } elseif(myisset($password_login)){
+    //return error message - username missing
+    $missing_username = true;
+  }
 
  ?>
 
@@ -25,52 +50,53 @@
         <br/><br/><br/><br/><br/>
         <h1 class="text-center" style="color: white;">Chat App</h1>
     </div>
-      
+
     <div class="container" style="padding: 30px;">
-          
-        
+
+
         <!-- Login Form -->
-        <form method="" action="" name="login-frm" onsubmit="return validateForm()">
-            
+        <form method="post" action="login.php" name="login-frm" onsubmit="return validateForm()">
+
              <!-- Email In -->
             <div class="inner-addon left-addon">
                 <i class="glyphicon glyphicon-envelope"></i>
-                <input id="username" 
-                       name="uName" 
-                       type="text" 
-                       class="form-control login-ben" placeholder="Email"/ 
+                <input id="username"
+                       name="username"
+                       type="text"
+                       class="form-control login-ben"
+                       placeholder="Email"/
                        value="<?php echo $_SESSION["return_un"];?>">
             </div>
-            
+
             <br/>
-            
+
             <!-- Password In -->
             <div class="inner-addon left-addon">
                 <i class="glyphicon glyphicon-lock"></i>
-                <input id="password" 
-                       name="pword" 
-                       type="text" 
-                       class="form-control login-ben" 
-                       placeholder="Password" 
+                <input id="password"
+                       name="password"
+                       type="text"
+                       class="form-control login-ben"
+                       placeholder="Password"
                        value="<?php echo $_SESSION["return_pw"];?>" />
             </div>
-            
+
             <br/><br/>
-        
+
             <!-- php triggered errors -->
             <?php
-                if($_SESSION["error_incorrect"] == true){
-                echo "<div class='alert alert-danger'>Username or password is incorrect</div>";
+                if($missing_password == true){
+                echo "<div class='alert alert-danger'>Please enter a password</div>";
                 }
 
-                if($_SESSION["error_missing"] == true){
-                echo "<div class='alert alert-danger'>Please fill in all the fields</div>";
+                if($missing_username == true){
+                echo "<div class='alert alert-danger'>Please enter a username</div>";
                 }
 
-                if($_SESSION["error_nouser"] == true){
+                if($did_not_exist == true){
                 echo "<div class='alert alert-danger'>Username does not exist</div>";
                 }
-            
+
                 //should add an error for too many login attempts
             ?>
 
@@ -91,24 +117,24 @@
                 <div id="alert-block-danger" class="alert alert-danger" style="display: none;">
                 Too many logins attempted, please try again later
                 </div>
-                
+
                 <!-- submit button -->
                 <div class="text-center">
-                
+
                     <button id="login-submit" type="submit" class="btn btn-default btn-lg btn-block">LOG IN</button>
 
                     <br/>
 
                     <!-- forget password link -->
                     <a style="color: #5fbac2;" href="#">Forgot password?</a><br/><br/>
-                    
+
                     <!-- new user signup link -->
                     <a style="color: #5fbac2;" href="../Reg/signup.php">New User?</a><br/><br/><br/><br/>
-                    
+
                     <p style="color: #adadad; font-size: 8pt;">Benjamin Walker | Shane Torres | Matthew Schultz | Holly Smith<br/>CSIS 408 - Project 02</p>
 
                 </div><!-- end text center -->
-            
+
             </form>
     </div><!-- end container -->
 

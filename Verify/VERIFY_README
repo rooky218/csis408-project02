@@ -1,34 +1,42 @@
+USERFLOW --
+
+   verify_generate.php >>
+   verify.php >>
+   verify_confirm.php
+
 Directory /verify/ contains email verification. The other Directory
 /verify_p/ contains phone verification
 
 VERIFY_GENERATE.PHP -- This page generates the confirmation code, no frontend
 visibility, user is automatically redirected to verify.php.
 
-  LINKS IN:
-          /Reg/signup_done.php        (if user wants to verify on signup)
-          /Account/dashboard.php      (if user wants to verify)
-          /verify.php                 (if user is having trouble and clicks resend code link)
+   --LINKS IN--
+   /Reg/signup_done.php        (if user wants to verify on signup)
+   /Account/dashboard.php      (if user wants to verify)
+   /verify.php                 (if user is having trouble and clicks resend code link)
 
-  LINKS OUT:
-          /verify.php                 (automatically redirects)
+   --LINKS OUT--
+   /verify.php                 (automatically redirects)
+
 
 VERIFY.PHP -- This page generates the input, and also compares results. If user
 exceeds 3 attempts, page is locked down for 12 hours.
 
-  LINKS IN:
-          /verify_generate.php        (automatic redirect)
+   --LINKS IN--
+   /verify_generate.php        (automatic redirect)
 
-  LINKS OUT:
-          /verify_confirm.php         (if successful code match)
-          /verify_generate.php        (if user needs new code sent)
-          ../Account/dashboard.php    (if user clicks BACK or gets locked out)
+   --LINKS OUT--
+   /verify_confirm.php         (if successful code match)
+   /verify_generate.php        (if user needs new code sent)
+   ../Account/dashboard.php    (if user clicks BACK or gets locked out)
+
 
 VERIFY_CONFIRM.PHP -- Outputs confirmation message, button to encourage phone
 verification (if not yet done) and button to redirect to user dashboard.
 
-  LINKS IN:
-        /verify.php                   (automatic redirect)
+   --LINKS IN--
+   /verify.php                   (automatic redirect)
 
-  LINKS OUT:
-        ../verify_p/verify_p_generate.php (if user opts to verify phone number)
-        ../Account/dashboard.php      (if user returns to dashboard)
+   --LINKS OUT--
+   ../verify_p/verify_p_generate.php (if user opts to verify phone number)
+   ../Account/dashboard.php      (if user returns to dashboard)
