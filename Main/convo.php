@@ -68,11 +68,14 @@ message results here -->
   //mysql_close($my_db);
 ?>
 
-    <body id="login-bg" style="margin-bottom: 70px;" onload="updateScroll();">
+<script src="../includes/JS/convo.js"></script>
 
-        <div class="container-fluid" style="height: 60px; padding: 5px;">
-          <h2 class="test text-center" >Ben Walker</h2>
-        </div>
+    <body id="login-bg" style="margin-bottom: 70px;" onload="setMyBox();">
+
+      <?php
+      //load page header
+       include("../includes/headers/page_topnav.php");
+       ?>
 
         <div id="convo-container" class="container">
 
@@ -109,7 +112,7 @@ message results here -->
             method="post"
             action="convo.php"
             class="">
-              <textarea class="form-control"
+              <textarea class="form-control autoExpand"
               rows="1"
               id="user-message"
               name="user-message"></textarea>
@@ -121,7 +124,7 @@ message results here -->
           </div>
       </div>
 
-      <scrip src="../includes/JS/convo.js"></script>
+
 
     </body>
 </html>

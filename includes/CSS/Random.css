@@ -209,7 +209,7 @@ i.icons-1 {
 }
 
 .send-bbl {
-  background-color: #c4cdf5;
+  background-color: #77E9F3;
   float: right;
 }
 
@@ -261,15 +261,57 @@ div.custom-form {
 }
 
 textarea#user-message {
-    width: auto;
+    width: 300px;
     max-height: 100px;
-    height: 40px;
-    position: absolute;
+    min-height: 40px;
+    overflow: auto;
 }
 
 #my-button-1 {
   position: absolute;
-  top: 10px;
+  bottom: 10px;
   right: 10px;
   height: 40px;
+  width: 75px;
+  border: none;
+  background-color: #adadad;
+  text-transform: uppercase;
+  color: black;
+}
+
+div.ben-navbar {
+  background-color: #333333;
+  width: 100%;
+  margin: 0px;
+  padding: 0px;
+  position: fixed;
+  z-index: 15;
+  top: 0;
+  left: 0;
+  height: 70px;
+  color: white;
+}
+
+.ben-navbar h2 {
+  color: white;
+  text-align: center;
+  margin: 10 0 0 0;
+  padding: 0;
+  display: block;
+}
+
+a.back-ben-2 {
+  position: absolute;
+  font-size: 18pt;
+  left: 7%;
+  top: 25px;
+  color: #adadad;
+}
+
+a.user-ben-2 {
+  position: absolute;
+  font-size: 18pt;
+  right: 7%;
+  top: 25px;
+  color: #adadad;
 }
