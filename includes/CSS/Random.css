@@ -180,8 +180,96 @@ i.icons-1 {
 }
 
 .test-2 {
-    color: white;
+    color: hotpink;
 
 }
 
 /*********** forget_met.php accordion************/
+
+
+/*********** convo.PHP talk bubbles************/
+
+.message-screen {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.message-bbl {
+  min-height: 20px;
+  height: auto;
+  padding: 3px 10px 3px 10px;
+  margin: 1.5px;
+  max-width: 270px;
+  width: auto;
+  border-radius: 15px;
+  font-size: 12pt;
+  display: inline-block;
+  clear: both;
+}
+
+.send-bbl {
+  background-color: #c4cdf5;
+  float: right;
+}
+
+.send-bbl p {
+  padding: 0px;
+  margin: 0px;
+}
+
+.receive-bbl {
+  background-color: white;
+  float: left;
+}
+
+.receive-bbl p {
+  padding: 0px;
+  margin: 0px;
+}
+
+
+.receive-bbl + .send-bbl {
+  margin-top: 20px;
+}
+
+.send-bbl + .receive-bbl {
+  margin-top: 20px;
+}
+
+.receive-bbl + .receive-bbl{
+  margin-top: 1.5px;
+}
+
+.send-bbl + .send-bbl{
+  margin-top: 1.5px;
+}
+
+
+div.custom-form {
+  background-color: #333333;
+  width: 100%;
+  margin: 0px;
+  padding: 10px;
+  position: fixed;
+  z-index: 10;
+  bottom: 0;
+  left: 0;
+  min-height: 50px;
+  height: auto;
+  color: white;
+}
+
+textarea#user-message {
+    width: auto;
+    max-height: 100px;
+    height: 40px;
+    position: absolute;
+}
+
+#my-button-1 {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  height: 40px;
+}

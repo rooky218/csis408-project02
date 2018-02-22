@@ -1,137 +1,127 @@
 <!-- this is the converstion page, lead in from main. Conversation is
 //displayed here. This page will facility connection to DB and output
 message results here -->
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Conversations</title>
-    <!-- custom CSS -->
-    <link rel="stylesheet" href="../includes/CSS/Random.css">
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 
-    <!-- jQuery library -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<?php
+  //need to which room the user is trying to access
+  //confirm that user is allowed to be in room
+  //if yes, load data for user
+  //if no, redirect out
 
-    <!-- Popper JS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+  session_start();
 
-    <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+  if($_SESSION["LOGGED_IN"] == true){
+    //if logged in, redirect to main page
+    //header("location: ./../Main/main.php");
+  }
 
-    </head>
+  //Set Page title and load header
+  $title = "Login"; //set page title
+  require("../includes/headers/header_main.php");
 
-    <body>
+  //load functions
+  require("../includes/PHP/functions.php");
 
-        <header>
-            <!-- top nav bar -->
-            <nav class="navbar navbar-expand-md bg-primary navbar-dark fixed-top">
-              <!-- Brand -->
-              <a class="navbar-brand" href="#">Conversations</a>
+  //load DB
+  require("../includes/PHP/DB/dblogin_test.php");
 
-              <!-- Toggler/collapsibe Button -->
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+  //set variables
+  $message = $_POST["user-message"];
+  $_POST["user-message"] = null;
+  $roomID = 2; //later to be set by GET data
+  $access_allowed = false;
+  $whoAmI = $_SESSION["userIDInS"];
+  //$permited_userID[] --- array declared and set in user_convo_check.php
 
-              <!-- Navbar links -->
-              <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">My Account</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Settings</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
-                  </li>
-                </ul>
-              </div>
-            </nav>
+  //confirm if you have access to room
+    //check DB
+  require("../includes/PHP/DB/user_convo_check.php");
+    //compare results from DB
+  for($i = 0; $i < count($permited_userID); $i++){
+    echo $permited_userID[$i];
+    if($_SESSION["userIDInS"] == $permited_userID[$i]){
+      $access_allowed = true;
+    }
+  }//end for
+    //if not in chat, redirect home
+  if($access_allowed == false){
+    //if access denied, redirect to main page
+    header("location: ./main.php");
+  }
 
-             <!-- bottom nav bar -->
-            <nav class="navbar navbar-expand-md bg-dark navbar-dark fixed-bottom">
-              <!-- Brand -->
-              <a class="navbar-brand" href="#">Conversations</a>
+  //if there is a sent message
+  if(myisset($message)){
+    //if set, upload meesage to DB
+    echo "My message: " . $message;
+    require("../includes/PHP/DB/sent_message.php");
+    //reset message
+    unset($message);
+  }
 
-              <!-- Toggler/collapsibe Button -->
-              <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-              </button>
+  //load messages
+  require("../includes/PHP/DB/load_message.php");
 
-              <!-- Navbar links -->
-              <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">My Account</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Settings</a>
-                  </li>
-                  <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
-                  </li>
-                </ul>
-              </div>
-            </nav>
-        </header>
 
-        <h1>Hello World</h1>
 
-        <div class="list-group">
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/19884356_10154716410676409_7622955142588271372_n.jpg" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">
-                Ben Walker<br/>
-                <small>This is what a sample text could look like, but...</small>
-            </a>
-            <!-- text inside the small brackets will show most recent text -->
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo"> Holly Smith<br/>
-                <small>This is what a sample text could look like, but...</small>
-            </a>
-            <!-- JS - if no image, image code is changed to default user -->
+  //close connection
+  //mysql_close($my_db);
+?>
 
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Matthew Schultz<br/>
-                <small>This is what a sample text could look like, but...</small></a>
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Shane Torres<br/>
-                <small>This is what a sample text could look like, but...</small></a>
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Matthew Schultz<br/>
-                <small>This is what a sample text could look like, but...</small></a>
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Shane Torres<br/>
-                <small>This is what a sample text could look like, but...</small></a>
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Matthew Schultz<br/>
-                <small>This is what a sample text could look like, but...</small></a>
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Shane Torres<br/>
-                <small>This is what a sample text could look like, but...</small></a>
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Matthew Schultz<br/>
-                <small>This is what a sample text could look like, but...</small></a>
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Shane Torres<br/>
-                <small>This is what a sample text could look like, but...</small></a>
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Matthew Schultz<br/>
-                <small>This is what a sample text could look like, but...</small></a>
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Shane Torres<br/>
-                <small>This is what a sample text could look like, but...</small></a>
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Matthew Schultz<br/>
-                <small>This is what a sample text could look like, but...</small></a>
-            <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-                <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">Shane Torres<br/>
-                <small>This is what a sample text could look like, but...</small></a>
+    <body id="login-bg" style="margin-bottom: 70px;" onload="updateScroll();">
+
+        <div class="container-fluid" style="height: 60px; padding: 5px;">
+          <h2 class="test text-center" >Ben Walker</h2>
         </div>
+
+        <div id="convo-container" class="container">
+
+<?php
+
+
+  if(myisset($row)){
+    echo "<ul class='message-screen'>";
+  while($row = $r->fetch_assoc()){
+    //If user sent it
+    if($row["sentFromUserID"] == $whoAmI){
+      echo "<li class='message-bbl send-bbl'>
+      <p>" . $row["message"] . "</p>
+      </li>";
+    } else {
+      //sent by other user
+      echo "<li class='message-bbl receive-bbl'>
+      <p>" . $row["message"] . "</p>
+      </li>";
+    }
+
+  //If user received it
+  }
+  echo "</ul>";
+  }
+
+?>
+
+      </div><!-- end container -->
+
+      <div class="container-fluid">
+          <div class="custom-form">
+            <form name="myForm"
+            method="post"
+            action="convo.php"
+            class="">
+              <textarea class="form-control"
+              rows="1"
+              id="user-message"
+              name="user-message"></textarea>
+
+              <button id="my-button-1" type="submit"
+              class="btn btn-default">Submit</button>
+
+            </form>
+          </div>
+      </div>
+
+      <scrip src="../includes/JS/convo.js"></script>
 
     </body>
 </html>

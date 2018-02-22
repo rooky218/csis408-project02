@@ -72,7 +72,7 @@
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
 
-  <body id="sign-bg">
+  <body id="login-bg">
 
       <div class="container" style="padding: 30px;">
 
