@@ -54,7 +54,7 @@ constraint PK_Messages primary key (MessageID),
 ParentMessageID int,
 TextBody varchar(500),
 DeliverTime timestamp,
-);
+DeliverDate date);
 
 create table MessageRecipients
 (
@@ -76,10 +76,7 @@ PhotoID int not null,
 constraint PK_PhotoID primary key (PhotoID),
 MessageID int,
 FileName varchar(20),
-<<<<<<< HEAD
-constraint FK_MessageID foreign key (MessageID) references Messages (MessageID)
-on delete cascade on update cascade);
-=======
 constraint FK_PhotoMessageID foreign key (MessageID) references Messages (MessageID)
 );
->>>>>>> c6b10febc3a5024b09f5e662039b0a6920779458
+
+
