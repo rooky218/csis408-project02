@@ -10,7 +10,9 @@ FirstName varchar(20),
 LastName varchar(20),
 Username varchar(20),
 Email varchar(30),
-Password varchar(20),
+UserPassword varchar(20),
+Location varchar(20),
+BirthDate date,
 constraint Pk_UserID primary key (UserID)) ENGINE = INNODB;
 
 create table Logins
@@ -46,9 +48,10 @@ constraint PK_UserNGroups primary key (GroupID, UserID)
 create table Messages
 (
 MessageID int not null,
-UserID int,
+SenderID int,
 RecipientID int,
-constraint fk_messagesender foreign key (UserID) references Users (UserID),
+RoomID int,
+constraint fk_messagesender foreign key (SenderID) references Users (UserID),
 constraint fk_messagerecipient foreign key (RecipientID) references Users (UserID),
 constraint PK_Messages primary key (MessageID),
 ParentMessageID int,
@@ -63,7 +66,7 @@ RecipientID int,
 GroupID int references Groups (GroupID)
 on delete cascade on update cascade,
 constraint fk_messageID foreign key (MessageID) references Messages (MessageID),
-constraint fk_senderID foreign key (SenderID) references Messages (UserID),
+constraint fk_senderID foreign key (SenderID) references Messages (SenderID),
 constraint fk_recipientID foreign key (RecipientID) references Messages (RecipientID),
 constraint PK_MessageRecipients primary key (MessageID, SenderID, RecipientID, GroupID)
 
@@ -77,7 +80,3 @@ MessageID int,
 FileName varchar(20),
 constraint FK_PhotoMessageID foreign key (MessageID) references Messages (MessageID)
 ) ENGINE = INNODB;
-
-
-
-
