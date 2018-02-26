@@ -57,7 +57,7 @@ this should lead to main.php. -->
 
 
             //upon load, redirect to main page
-            header("location: ./../Main/convo.php");
+            header("location: ./../Main/main_dynamic.php");
 				} else {
           //no match found
           $did_not_exist = true;
