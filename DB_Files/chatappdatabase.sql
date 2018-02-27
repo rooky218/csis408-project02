@@ -3,7 +3,9 @@ create database ChatApp;
 use ChatApp;
 
 create table Users
-(UserID int not null AUTO_INCREMENT,
+(
+UserID int not null AUTO_INCREMENT,
+Admin bool,
 CreateDate date,
 Active bool,
 FirstName varchar(20),
