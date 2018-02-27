@@ -1,7 +1,5 @@
 create database ChatApp;
 
-drop database ChatApp;
-
 use ChatApp;
 
 create table Users
@@ -46,9 +44,6 @@ constraint fk_GroupID foreign key (GroupID) references Groups (GroupID),
 constraint fk_UserID foreign key (UserID) references Users (UserID),
 constraint PK_UserNGroups primary key (GroupID, UserID)
 ) ENGINE = INNODB;
-
-drop table Messages;
-
 
 create table Messages
 (
