@@ -1,9 +1,11 @@
 create database ChatApp;
 
+drop database ChatApp;
+
 use ChatApp;
 
 create table Users
-(UserID int not null,
+(UserID int not null AUTO_INCREMENT,
 CreateDate date,
 Active bool,
 FirstName varchar(20),
@@ -31,7 +33,7 @@ constraint fk_status foreign key (UserID) references Logins (UserID)
 ) ENGINE = INNODB;
 
 create table Groups
-(GroupID int not null,
+(GroupID int not null AUTO_INCREMENT,
 GroupName varchar (20) not null,
 CreateDate date,
 Active bool,
@@ -45,12 +47,15 @@ constraint fk_UserID foreign key (UserID) references Users (UserID),
 constraint PK_UserNGroups primary key (GroupID, UserID)
 ) ENGINE = INNODB;
 
+drop table Messages;
+
+
 create table Messages
 (
-MessageID int not null,
+MessageID int not null AUTO_INCREMENT,
 SenderID int,
 RecipientID int,
-RoomID int,
+RoomID int not null AUTO_INCREMENT,
 constraint fk_messagesender foreign key (SenderID) references Users (UserID),
 constraint fk_messagerecipient foreign key (RecipientID) references Users (UserID),
 constraint PK_Messages primary key (MessageID),
@@ -74,7 +79,7 @@ constraint PK_MessageRecipients primary key (MessageID, SenderID, RecipientID, G
 
 create table Photos
 (
-PhotoID int not null,
+PhotoID int not null AUTO_INCREMENT,
 constraint PK_PhotoID primary key (PhotoID),
 MessageID int,
 FileName varchar(20),
