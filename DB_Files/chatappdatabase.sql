@@ -1,4 +1,3 @@
-create database ChatApp;
 
 use ChatApp;
 

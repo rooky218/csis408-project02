@@ -12,6 +12,8 @@
   $title = "Mainpage"; //set page title
   require("../includes/headers/header_main.php");
 
+
+
   //load functions
   require("../includes/PHP/functions.php");
 
@@ -51,11 +53,7 @@
 
       */
       ?>
-      <a href='#' class='list-group-item list-group-item-action' style='height: 75px;'>
-          <img src='../includes/photos/19884356_10154716410676409_7622955142588271372_n.jpg' class='rounded-circle float-left' style='margin-right: 25px;' height='50px' width='50px' alt='user-photo'>
-          Ben Walker<br/>
-          <small>This is what a sample text could look like, but...</small>
-      </a>
+
 
         <!-- JS - if no image, image code is changed to default user -->
 

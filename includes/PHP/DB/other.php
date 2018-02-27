@@ -26,12 +26,14 @@
         $q2 = "SELECT * FROM conversation WHERE roomID = \"$extract_room\";";
         $r2 = @mysqli_query($my_db, $q2);
         if ($r2){
-          echo "<br/> Results 2 worked";
+          echo "<br/> Results 2 worked".$row2["roomID"]."";
         $row2 = mysqli_fetch_array($r, MYSQLI_ASSOC);
 
+        $row2 = $r2->fetch_assoc();
+
         //output results to page
-        echo "<a href='convo_dynamic.php?room=".$row2["roomID"]."'
-              class='list-group-item list-group-item-action'
+        echo "<a href='convo_dynamic.php?room=".$row2["roomID"]."
+            'class='list-group-item list-group-item-action'
               style='height: 75px;'>
             <img src='../includes/photos/19884356_10154716410676409_7622955142588271372_n.jpg'
             class='rounded-circle float-left'
@@ -43,11 +45,7 @@
             <small>Message here: " . $row2["message"] . "</small>
         </a>";
 
-        echo "<a href='#' class='list-group-item list-group-item-action' style='height: 75px;'>
-            <img src='../includes/photos/19884356_10154716410676409_7622955142588271372_n.jpg' class='rounded-circle float-left' style='margin-right: 25px;' height='50px' width='50px' alt='user-photo'>
-            Ben Walker<br/>
-            <small>This is what a sample text could look like, but...</small>
-        </a>";
+
 
       } else {
         echo "<br>inner DB request failed";
