@@ -7,7 +7,6 @@ create table Users
 Admin bool,
 UserID int not null AUTO_INCREMENT,
 CreateDate date,
-Active bool,
 EmailVerified bool,
 Phone varchar(20),
 PhoneA varchar(20),
