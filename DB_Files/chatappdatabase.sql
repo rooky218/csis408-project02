@@ -4,14 +4,18 @@ use ChatApp;
 
 create table Users
 (
-UserID int not null AUTO_INCREMENT,
 Admin bool,
+UserID int not null AUTO_INCREMENT,
 CreateDate date,
 Active bool,
+EmailVerified bool,
+Phone varchar(20),
+PhoneA varchar(20),
 FirstName varchar(20),
 LastName varchar(20),
 Username varchar(20),
 Email varchar(30),
+ZipCode varchar(20),
 UserPassword varchar(20),
 Location varchar(20),
 BirthDate date,
