@@ -4,32 +4,38 @@
   $whoAmI = $_SESSION["userIDInS"];
 
   //build Query
+  //return all the rooms I am in
   $q =
     "SELECT DISTINCT roomID
     FROM conversation
-    WHERE sentFromUserID = \"$whoAmI\";";
+    WHERE sentFromUserID = \"$whoAmI\"
+    OR sentToUserID = \"$whoAmI\";";
 
   //Run Q
   $r = @mysqli_query($my_db, $q);
 
   //Process
   $i = 0;
+
   if ($r){
     $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
     while($row = $r->fetch_assoc()) {
         echo "<br/>start loop ";
         //save users into array
         $extract_room = $row["roomID"];
-        echo "<br/>There are " . count($extract_room) . " rooms";
+        echo "<br/>RoomID: " . $row["roomID"];
 
         //return results from second q
+        //return all information relating to a specific room
         $q2 = "SELECT * FROM conversation WHERE roomID = \"$extract_room\";";
         $r2 = @mysqli_query($my_db, $q2);
         if ($r2){
-          echo "<br/> Results 2 worked".$row2["roomID"]."";
+          echo "<br/>".$row2["roomID"];
         $row2 = mysqli_fetch_array($r, MYSQLI_ASSOC);
 
         $row2 = $r2->fetch_assoc();
+        echo "<br/>".$row2["roomID"];
+
 
         //output results to page
         echo "<a href='convo_dynamic.php?room=".$row2["roomID"]."
@@ -44,8 +50,6 @@
             User number here: " . $row2['sentFromUserID'] . "<br/>
             <small>Message here: " . $row2["message"] . "</small>
         </a>";
-
-
 
       } else {
         echo "<br>inner DB request failed";
