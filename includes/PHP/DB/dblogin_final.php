@@ -7,7 +7,7 @@
 // Set the database access information as constants:
 
 
-DEFINE ("DB_USER", "user-1");
+DEFINE ("DB_USER", "user-3");
 DEFINE ("DB_PASSWORD", "letmein");
 DEFINE ("DB_HOST", "localhost");
 DEFINE ("DB_NAME", "chatapp");

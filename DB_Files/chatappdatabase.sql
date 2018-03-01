@@ -54,7 +54,7 @@ create table Messages
 MessageID int not null AUTO_INCREMENT,
 SenderID int,
 RecipientID int,
-RoomID int not null AUTO_INCREMENT,
+RoomID int not null,
 constraint fk_messagesender foreign key (SenderID) references Users (UserID),
 constraint fk_messagerecipient foreign key (RecipientID) references Users (UserID),
 constraint PK_Messages primary key (MessageID),
