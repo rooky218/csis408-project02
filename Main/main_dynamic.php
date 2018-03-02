@@ -12,71 +12,61 @@
   $title = "Mainpage"; //set page title
   require("../includes/headers/header_main.php");
 
-
-
   //load functions
   require("../includes/PHP/functions.php");
 
   //load DB
-  require("../includes/PHP/DB/dblogin_test.php");
-
-  //set variables
-
-
-  //logic
-
+  require("../includes/PHP/DB/dblogin_final.php");
 
 ?>
 
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<body id="login-bg" style="margin:70px 0 0 0;">
+  <?php
+    //set header options
+    $back_link = 0;
+    $back_icon = "glyphicon-chevron-left";
+    $options_link = "#";
+    $options_icon = "glyphicon-user";
+    $page_title = "Messages";
+    require("../includes/headers/page_topnav.php");?>
 
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-<!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-
-
-
-<body>
-    <div class="container">
+    <div class="container-fluid" style="padding: 0;">
 
 
     <div class="list-group">
 
       <?php
-      require("../includes/PHP/DB/other.php");
-
-      /*
-
-      <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-          <img src="../includes/photos/19884356_10154716410676409_7622955142588271372_n.jpg" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">
-          Ben Walker<br/>
-          <small>This is what a sample text could look like, but...</small>
-      </a>
-      <!-- text inside the small brackets will show most recent text -->
-      <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-          <img src="../includes/photos/default-user.png" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo"> Holly Smith<br/>
-          <small>This is what a sample text could look like, but...</small>
-      </a>
-
-      */
+      //load messages
+      require("../includes/PHP/DB/all_messages.php");
       ?>
 
-      <a href="#" class="list-group-item list-group-item-action" style="height: 75px;">
-          <img src="../includes/photos/19884356_10154716410676409_7622955142588271372_n.jpg" class="rounded-circle float-left" style="margin-right: 25px;" height="50px" width="50px" alt="user-photo">
-          Ben Walker<br/>
-          <small>This is what a sample text could look like, but...</small>
-      </a>
-
-
-        <!-- JS - if no image, image code is changed to default user -->
-
-
     </div>
+
+
+    <div style='width: 50px;
+    height: 50px;
+    background-color: #adadad;
+    text-align: center;
+    border-radius: 50%;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    position: fixed;
+    bottom: 50px;
+    right: 30px;
+    '>
+      <span
+      style='position: relative;
+      top: 13px;
+      font-size: 18pt;
+      color: #fff;
+      font-weight: bold;'>
+      <a class="glyphicon glyphicon-comment"
+      href="#"
+      style="color: white;"></a></span>
+    </div>
+
+
+
 
 </body>
 </html>

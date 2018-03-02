@@ -1,11 +1,15 @@
+
+
+
 <div class="container-fluid ben-navbar">
   <!-- back to last page icon link -->
-  <a class="glyphicon glyphicon-chevron-left back-ben-2"
-     href="main.php"></a>
 
-  <h2>Ben Walker</h2>
+  <a class="glyphicon <?php echo $back_icon;?> back-ben-2"
+     href="<?php echo $back_link;?>"></a>
+
+  <h2><?php echo $page_title;?></h2>
 
     <!-- back to last page icon link -->
-    <a class="glyphicon glyphicon-user user-ben-2"
-       href="#"></a>
+    <a class="glyphicon <?php echo $options_icon;?> user-ben-2"
+       href="<?php echo $options_link;?>"></a>
 </div>
