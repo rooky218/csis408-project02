@@ -1,5 +1,138 @@
 <?php
 
+//check unique values
+//true = match found
+//false = unique value
+//input value required, no default
+function checkUsername($value){
+  //link to DB
+  global $my_db;
+
+
+  //build query
+  $q =
+  "SELECT Username
+  FROM Users
+  WHERE UserName = \"$value\";";
+
+  // Run the query.
+  $r = @mysqli_query($my_db, $q);
+
+  // If results came back
+  if ($r) {
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    $returned = $row["Username"];
+    if($returned == $value){
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    // Debugging message:
+    echo "<p>" . mysqli_error($my_db);
+  }
+  //unset $q
+  unset($q);
+  unset($r);
+} //end function
+
+function checkEmail($value){
+  //link to DB
+  global $my_db;
+
+
+  //build query
+  $q =
+  "SELECT Email
+  FROM Users
+  WHERE Email = \"$value\";";
+
+  // Run the query.
+  $r = @mysqli_query($my_db, $q);
+
+  // If results came back
+  if ($r) {
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    $returned = $row["Email"];
+    if($returned == $value){
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    // Debugging message:
+    echo "<p>" . mysqli_error($my_db);
+  }
+  //unset $q
+  unset($q);
+  unset($r);
+} //end function
+
+function checkPhone($value){
+  //link to DB
+  global $my_db;
+
+
+  //build query
+  $q =
+  "SELECT Phone
+  FROM Users
+  WHERE Phone = \"$value\";";
+
+  // Run the query.
+  $r = @mysqli_query($my_db, $q);
+
+  // If results came back
+  if ($r) {
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    $returned = $row["Phone"];
+    if($returned == $value){
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    // Debugging message:
+    echo "<p>" . mysqli_error($my_db);
+  }
+  //unset $q
+  unset($q);
+  unset($r);
+} //end function
+
+function checkPassword($value){
+  //link to DB
+  global $my_db;
+
+
+  //build query
+  $q =
+  "SELECT Password
+  FROM Users
+  WHERE Password = \"$value\";";
+
+  // Run the query.
+  $r = @mysqli_query($my_db, $q);
+
+  // If results came back
+  if ($r) {
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    $returned = $row["Password"];
+    if($returned == $value){
+      return true;
+    } else {
+      return false;
+    }
+  } else {
+    // Debugging message:
+    echo "<p>" . mysqli_error($my_db);
+  }
+  //unset $q
+  unset($q);
+  unset($r);
+} //end function
+
+
 //get values
 function getUsername($user = 0){
   //link to DB
@@ -76,6 +209,47 @@ function getLocation($zip = 0){
   //variables
   if($zip == 0){
     $zip = $_SESSION["zipInS"];
+  }
+
+  //build query
+  $q =
+  "SELECT *
+  FROM Zipcode
+  WHERE zipID = \"$zip\";";
+
+  // Run the query.
+  $r = @mysqli_query($my_db, $q);
+
+  // If results came back
+  if ($r) {
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    $city = $row["City"];
+    //format text
+    $city = mb_convert_case($city, MB_CASE_LOWER, "UTF-8");
+    $city = ucwords($city);
+    $state = $row["State"];
+    $location = $city . ", " . $state;
+    return $location;
+
+  } else {
+    // Public message:
+    echo "<p>We could not access the database</p>";
+    // Debugging message:
+    echo "<p>" . mysqli_error($my_db);
+  }
+
+  //unset $q
+  unset($q);
+  unset($r);
+} //end function
+
+function getLocationByUser($user = 0){
+  //link to DB
+  global $my_db;
+
+  //variables
+  if($user == 0){
+    $user = $_SESSION["userIDInS"];
   }
 
   //build query
@@ -498,7 +672,6 @@ function getAge($user = 0){
 } //end function
 
 //set values
-
 function setUsername($newValue){
 
   //link to DB

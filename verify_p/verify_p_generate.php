@@ -2,8 +2,19 @@
   session_start();
 
   //check for post value, display content appropriatly
-    //$phone = $_SESSION["phoneInA"];
-    $phone = 4342197737;
+  //load functions
+  require("../includes/PHP/functions.php");
+
+    //if sent from confirm.php
+    if(myisset($_SESSION["temp-phone"])){
+      $phone = $_SESSION["temp-phone"];
+      $exit = "location: ./../Account/dashboard.php";
+    } else {
+      //if sent from Registration
+      $phone = $_SESSION["phoneInA"];
+      $exit = "location: ./../Main/convo_dynamic.php";
+    }
+
 
 
     //reset lockout counter - testing only
@@ -55,7 +66,7 @@
 
       if(mail($phoneArray[$y], $sub, $mes_tmo, $header)){
         //if sent, direct to next page
-        echo "<br/> Message was sent";
+        //echo "<br/> Message was sent";
         header("location: ./verify_p.php");
       } else {
         //if failed, try again

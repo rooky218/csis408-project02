@@ -19,6 +19,13 @@
     $title = "Update Profile"; //set page title
     require("../includes/headers/header_main.php");
 
+    ?>
+
+    <body id="menu-page" style="color: white;">
+      <div class="container" style="padding: 30px;">
+
+    <?php
+
     $pageID = $_GET["page"];
 
     //update username***************************************************
@@ -28,10 +35,23 @@
       if(myisset($_POST["username"]) && myisset($_POST["password"])){
         if($_POST["password"] == $_SESSION["passwordInS"]){
           //call db
-          echo "Database called <br/>";
           setUsername($_POST["username"]);
-          echo "New Username: " . $_SESSION["userNameInS"];
-          echo "<br><a href='dashboard.php'>Go</a>";
+
+          echo "
+          <h3 class='test text-center'>Username Updated</h3>
+
+          <br/><br/>
+
+          <div style='text-align: center;'>
+
+         <h4 class='test text-center' style='color:#77E9F3;'>"
+         . getUsername() .
+         "
+         </h4>
+         <br/><br/>
+
+          <a class='btn btn-default btn-lg btn-block' href='dashboard.php'>Done</a>
+          ";
         } else {
           echo "Password Incorrect";
         }
@@ -49,11 +69,10 @@
       //check for submission, confirm password, then update DB
       if(myisset($_POST["value1"]) && myisset($_POST["password"])){
         if($_POST["password"] == $_SESSION["passwordInS"]){
-          //call db
-          echo "Database called <br/>";
-          setPhone($_POST["value1"]);
-          echo "New phone: " . $_SESSION["phoneInS"];
-          echo "<br><a href='dashboard.php'>Go</a>";
+          //send to verify
+          $_SESSION["temp-phone"] = $_POST["value1"];
+          header("location: ./../verify_p/verify_p_generate.php");
+
         } else {
           echo "Password Incorrect";
         }
@@ -111,10 +130,38 @@
       if(myisset($_POST["value1"]) && myisset($_POST["password"])){
         if($_POST["password"] == $_SESSION["passwordInS"]){
           //call db
-          echo "Database called <br/>";
           setZip($_POST["value1"]);
-          echo "New zip: " . $_SESSION["zipInS"];
-          echo "<br><a href='dashboard.php'>Go</a>";
+
+          echo "
+          <h3 class='test text-center'>Location Updated</h3>
+
+          <br/><br/>
+
+          <div style='text-align: center;'>
+          <iframe
+           width='200'
+           height='200'
+           frameborder='0' style=
+           'border: solid #53a3aa 5px;
+           border-radius: 50%;
+           '
+           src='https://www.google.com/maps/embed/v1/place?key=AIzaSyDvXjk_57bj1L_7HrmtnfP3dJqcO4_LBSk
+             &q=". getLocationDev() . "' allowfullscreen>
+         </iframe>
+         </div>
+         <h4 class='test text-center' style='color:#77E9F3;'>"
+         . getLocation() .
+         "
+         </h4>
+
+          <br/><br/>
+
+          <a class='btn btn-default btn-lg btn-block'
+             href='dashboard.php'>Done</a>
+          ";
+
+
+
         } else {
           echo "Password Incorrect";
         }
@@ -135,10 +182,17 @@
         if($_POST["value1"] == $_POST["value2"]){
           if($_POST["password"] == $_SESSION["passwordInS"]){
             //call db
-            echo "Database called <br/>";
             setPassword($_POST["value1"]);
-            echo "New phone: " . $_SESSION["emailInS"];
-            echo "<br><a href='dashboard.php'>Go</a>";
+
+            echo "
+            <h3 class='test text-center'>Password Updated</h3>
+
+            <br/><br/>
+
+            <a class='btn btn-default btn-lg btn-block'
+               href='dashboard.php'>Done</a>
+            ";
+
           } else {
             echo "Current password incorrect";
           }
@@ -198,3 +252,8 @@
     }
     */
  ?>
+
+</div><!-- end container -->
+
+</body>
+</html>

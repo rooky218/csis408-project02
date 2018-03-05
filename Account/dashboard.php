@@ -112,7 +112,7 @@ When viewing other users, other infomation will be displayed, with buttons to Me
         <div class="media-right media-top">
         <?php
         //check it phone verified
-        if(myisset($_SESSION["phone_a_InS"])){
+        if(!myisset($_SESSION["phone_a_InS"])){
           echo "<a href='#phoneV'><h4><span class='label label-default'>Unverified</span></h4></a>";
         } else {
           echo "<h4><span class='label label-success'>Verified</span></h4>";

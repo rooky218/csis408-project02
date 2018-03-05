@@ -39,51 +39,49 @@
 
     //update username
     if($pageID == "username"){
+      echo "
+        <br/>
+        <br/>
+        <h3 class='test text-center'>Change Username</h3>
+        <br/>
+        <br/>
+        <h4 class='test text-center' style='color:#77E9F3;'>
+        ". getUsername() ."
+        </h4>
 
-    echo "
-      <br/>
-      <br/>
-      <h3 class='test text-center'>Change Username</h3>
-      <br/>
-      <br/>
-      <h4 class='test text-center' style='color:#77E9F3;'>
-      ". getUsername() ."
-      </h4>
+        <br/><br/>
 
-      <br/><br/>
+        <!-- Login Form -->
+        <form method='post'
+          action='confirm.php?page=".$pageID."'>
 
-      <!-- Login Form -->
-      <form method='post'
-        action='confirm.php?page=".$pageID."'>
+        <!-- Email In -->
+        <label class='test'>Enter new username</label>
+          <input id='username'
+             name='username'
+             type='text'
+             class='form-control login-ben'
+             placeholder='Username'
+             style='text-align: center;' />
+        <br/>
 
-      <!-- Email In -->
-      <label class='test'>Enter new username</label>
-        <input id='username'
-           name='username'
+        <!-- Password In -->
+        <label class='test'>Enter password to save change</label>
+        <input id='password'
+           name='password'
            type='text'
            class='form-control login-ben'
-           placeholder='Username'
+           placeholder='Password'
            style='text-align: center;' />
-      <br/>
 
-      <!-- Password In -->
-      <label class='test'>Enter password to save change</label>
-      <input id='password'
-         name='password'
-         type='text'
-         class='form-control login-ben'
-         placeholder='Password'
-         style='text-align: center;' />
+        <br/><br/>
+        <!-- submit button -->
+        <button id='login-submit' type='submit' class='btn btn-default btn-lg btn-block'>Submit</button>
 
-      <br/><br/>
-      <!-- submit button -->
-      <button id='login-submit' type='submit' class='btn btn-default btn-lg btn-block'>Submit</button>
+        <a class='btn btn-default btn-lg btn-block'
+           href='dashboard.php'>Go Back</a> <!-- back to login.php -->
 
-      <a class='btn btn-default btn-lg btn-block'
-         href='dashboard.php'>Go Back</a> <!-- back to login.php -->
-
-      </form>
-      "; //end echo
+        </form>";
     }
 
     //add phone number***************************************************
@@ -419,11 +417,7 @@
       <a class='btn btn-default btn-lg btn-block'
          href='dashboard.php'>Go Back</a> <!-- back to login.php -->
 
-      </form>
-";
-
-      //submit to confirm.php?set=password
-
+      </form>";
     }
 
     //Change password***************************************************

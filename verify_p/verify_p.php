@@ -1,17 +1,19 @@
 <?php
   session_start();
 
-    //check if already logged in send to main
-    if($_SESSION["LOGGED_IN"] == true){
-
-    }
-
     //if not logged in add header
     $title = "Verify your Phone"; //set page title
     require("../includes/headers/header_main.php");
 
     //load functions
     require("../includes/PHP/functions.php");
+
+    //load DB
+    require("../includes/PHP/DB/dblogin_final.php");
+
+    //load Queries
+    require("../includes/PHP/DB/profile_settings/set_get.php");
+
 
     //set variables
     $user_code = $_POST["confirm_code"];
@@ -20,7 +22,7 @@
     $match = false;
 
     //testing only
-    echo "<p class='test'>" . $_SESSION["code_array"][3] . "</p>";
+    echo "<p class='test'>" . $_SESSION["code_array"][0] . "</p>";
     $_SESSION["phoneInA"] = 4342197737;
 
     //set or add to counter
@@ -47,9 +49,12 @@
             $phone_code_confirmed = $_SESSION["code_array"][$i];
             $phone_address_confirmed = $_SESSION["address_array"][$i];
             //UPLOAD CONFIRMED TO DB
+            setPhone($_SESSION["temp-phone"]);
+            setPhoneV($phone_address_confirmed);
 
             //send to confirm message page
             header("location: ./verify_p_confirm.php");
+
           }//end if
         }//end for loop
 
@@ -76,7 +81,7 @@
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
 
-  <body id="sign-bg">
+  <body id="menu-page">
 
       <div class="container" style="padding: 30px;">
 
