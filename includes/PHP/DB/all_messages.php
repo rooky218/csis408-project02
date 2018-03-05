@@ -3,7 +3,7 @@
 
 
   //set variables
-  $whoAmI = 3; //$_SESSION["userIDInS"];
+  $whoAmI = $_SESSION["userIDInS"];
 
   //build Query
   //return all the rooms I am in
@@ -49,16 +49,20 @@
           $sentToUsername = $row3["FullName"];
         }
 
+        ucwords($sentToUsername);
+        $user_initials = substr($sentToUsername, 0, 1);
+
         //output results to page
 
-        echo "    <a href='convo_dynamic.php?room=" . $row1["RoomID"] . "'
+        echo "<a href='convo_dynamic.php?room=" . $row1["RoomID"] . "'
             class='list-group-item'
-            style='background-color: rgba(255, 255, 255, 0.5);'>
+            style='background-color: rgba(255, 255, 255, 0.85);'>
               <div class='media'>
               <div class='media-left'>
-                <div style='width: 60px;
-                height: 60px;
-                background-color: #77E9F3;
+                <div style='width: 40px;
+                height: 40px;
+                margin-top: 7px;
+                background-color: #737373;
                 text-align: center;
                 border-radius: 50%;
                 -webkit-border-radius: 50%;
@@ -66,11 +70,11 @@
                 '>
                   <span
                   style='position: relative;
-                  top: 11px;
-                  font-size: 21pt;
+                  top: 9px;
+                  font-size: 14pt;
                   color: #fff;
-                  font-weight: bold;'>
-                  BW</span>
+                  '>
+                  " . $user_initials ."</span>
                 </div>
                   </div>
               <div class='media-body' style='color: black;'>

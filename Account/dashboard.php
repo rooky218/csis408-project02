@@ -1,4 +1,4 @@
-<!-- 
+<!--
 This is the user profile view. This is for the user viewing THEIR OWN PROFILE, not other users.
 
 When viewing other users, other infomation will be displayed, with buttons to Message and Add friend
@@ -7,192 +7,208 @@ When viewing other users, other infomation will be displayed, with buttons to Me
 <?php
   session_start();
 
-  //check if already logged in send to main
-  if($_SESSION["LOGGED_IN"] == true){
-    //header("location: ./../includes/headers/header_main.php");
-    //$_SESSION["Alert_already_logged_in"] = true;
-  }
+    //check if already logged in send to main
+    if($_SESSION["LOGGED_IN"] == true){
+      //header("location: ./../includes/headers/header_main.php");
+      //$_SESSION["Alert_already_logged_in"] = true;
+    }
+
+    //load functions
+    require("../includes/PHP/functions.php");
+
+    //load DB
+    require("../includes/PHP/DB/dblogin_final.php");
+
+    //load Queries
+    require("../includes/PHP/DB/profile_settings/set_get.php");
+
+    //Variables
+    //$city - set in return_zip.php
+    //$state - set in return_zip.php
+    //$age - set in return_bd.php
 
     //if not logged in add header
     $title = "My Account"; //set page title
     require("../includes/headers/header_main.php");
-    //require("includes/header_logged_out.php"); //load page header
-    //require("includes/header_logged_in.php"); //load page header
+
  ?>
 
 
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
 
-  <body id="sign-bg">
-      
+  <body id="menu-page">
+
     <!-- image container -->
     <div class="account-background"></div><!--blur profile image-->
     <div class="account-transparent"></div><!-- dark overlay -->
-      
+
     <div class="content-container">
         <br/>
         <!-- back to last page icon link -->
         <a class="glyphicon glyphicon-chevron-left ben-back-icon"
-           href="#"
+           href="../Main/main_dynamic.php"
            style="position: absolute;
                   top: 40px;
-                  left: 20px;
+                  left: 7%;
                   color: #adadad;
                   font-size: 18pt;"></a>
-        
+
         <!-- edit profile settings -->
         <a class="glyphicon glyphicon-cog ben-back-icon"
-           href="#"
+           href="settings.php?page=profile-change"
            style="position: absolute;
                   top: 40px;
-                  left: 350px;
+                  left: 85%;
                   color: #adadad;
                   font-size: 18pt;"></a>
-        
-        
+
+
         <h3 class="">Profile</h3>
-        
-        <img src="../includes/photos/19884356_10154716410676409_7622955142588271372_n.jpg" 
-            height="125px" 
-            width="125px" 
+
+        <img src="../includes/photos/19884356_10154716410676409_7622955142588271372_n.jpg"
+            height="125px"
+            width="125px"
             class="img-circle">
-              
-        <h2 class="">Ben Walker</h2>
-            
-        <h5 class="">Lynchburg, Virginia</h5>
-          
-      </div><!-- end content container -->
-      
-      
-      
-           <!-- navbar 
-          <header>
-            <!-- top nav bar 
-            <nav class="navbar navbar-expand-md bg-primary navbar-dark">
-              <!-- Brand 
-              <a class="navbar-brand" href="#">Conversations</a>
-                
-            </nav>
-        
-        </header>
-        -->
-   <!--   
-    <br/>
-    <ul class="nav nav-pills text-center" >
-        <div class="col-xs-4">
-            <li class="active">
-                <a data-toggle="pill" href="#home">Contact</a>
-            </li>
-        </div>
-        <div class="col-xs-4">
-            <li>
-                <a data-toggle="pill" href="#menu1">Settings</a>
-            </li>
-        </div>
-        <div class="col-xs-4">
-            <li>
-                <a data-toggle="pill" href="#menu2">Links</a>
-            </li>
-        </div>
-    </ul>
-      
-      <br/>
-      
-      <ul class="nav nav-pills nav-justified">
-  <li class="active"><a data-toggle="pill" href="#home">Home</a></li>
-  <li><a data-toggle="pill" href="#menu1">Menu 1</a></li>
-  <li><a data-toggle="pill" href="#menu2">Menu 2</a></li>
-</ul>
-          
-      
-    <div class="tab-content">
-    <div id="home" class="tab-pane fade in active">
-      <h3 class="test">HOME</h3>
-      <p class="test">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-    </div>
-    <div id="menu1" class="tab-pane fade">
-      <h3 class="test">Menu 1</h3>
-      <p class="test">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-    </div>
-    <div id="menu2" class="tab-pane fade">
-      <h3 class="test">Menu 2</h3>
-      <p class="test">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
-    </div>
-  </div>
-    
-      -->
-      <div class="container" style="padding: 30px;">
-          <br/>
-          <h3 class="test" style="margin-top: 0;">Contact Info</h3>
-          
-          <!-- contact settings icon -->
-          <a class="glyphicon glyphicon-cog ben-back-icon"
-           href="#"
-           style="position: absolute;
-                  top: 450px;
-                  left: 350px;
-                  color: #adadad;
-                  font-size: 18pt;"></a>
-          <br/>
-          <h4 class="test-2">Username<br/><small style="color: #77E9F3;">rooky218</small></h4>
-          <br/>
-          <h4 class="test-2">Phone<br/>
-              <small style="color: #77E9F3;">(540)514-8370&nbsp; &nbsp; &nbsp;</small>
-              <span class="label label-success">Verified</span></h4>
-          <br/>
-          
-          
-          <h4 class="test-2">Email<br/>
-              <small style="color: #77E9F3;">bwalker35@liberty.edu&nbsp; &nbsp; &nbsp;</small>
-              <span class="label label-default">Unverified</span></h4>
-          <br/><br/>
-          
-          <h3 class="test">Settings</h3>
-          <br/>
-          <h4 class="test-2">Pin Screen</h4>
-          <br/>
-          <h4 class="test-2">Logout</h4>
-          <br/>
-          <h4 class="test-2">Help</h4>
-          <br/>
-          <h4 class="test-2">Contact the Developer</h4>
-          <br/><br/>
-          
-          
-          
-          
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-          <h3 class="test">Benjamin Walker</h3>
-                
-          <hr/>
-          
 
-                
-          
+        <h2 class=""><?php echo $_SESSION["firstNameInS"] . " " . $_SESSION["lastnameInS"] . ", " . getAge();?></h2>
 
-          <br/>
-          
+        <h5 class=""><?php echo getLocation();?></h5>
+
+        </div><!-- end content container -->
+
+        <br/>
+
+        <?php //echo "<span style='color: white;'>" . $_SESSION["email_V_InS"]."</span>";?>
+
+        <!-- Username -->
+        <div class="media" style="padding: 0 20px 0 20px; color: white">
+        <div class="media-body">
+        <h4 class="media-heading">Username</h4>
+        <a href='settings.php?page=username' style='color: #77E9F3;'><?php echo $_SESSION["userNameInS"];?></a>
+        </div>
+        <div class="media-right media-top">
+          <?php if($_SESSION["AdminAccess"] == true){
+          echo "<h4><span class='label label-primary'>Admin</span></h4>";
+        };
+        ?>
+        </div>
+        </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="media" style="padding: 0 20px 0 20px; color: white">
+        <div class="media-body">
+        <h4 class="media-heading">Phone</h4>
+        <?php
+        //check if phone set
+        if($_SESSION["phoneInS"] == "0"){
+          echo "<a href='settings.php?page=phone-add' style='color: #77E9F3;'>Add phone</a>";
+        } else {
+          echo "<a href='settings.php?page=phone-update' style='color: #77E9F3;'>" . $_SESSION["phoneInS"] . "</a>";
+        }
+        ?>
+        </div>
+        <div class="media-right media-top">
+        <?php
+        //check it phone verified
+        if(myisset($_SESSION["phone_a_InS"])){
+          echo "<a href='#phoneV'><h4><span class='label label-default'>Unverified</span></h4></a>";
+        } else {
+          echo "<h4><span class='label label-success'>Verified</span></h4>";
+        }
+        ?>
+        </div>
+        </div>
+
+        <!-- Email -->
+        <div class="media" style="padding: 0 20px 0 20px; color: white">
+        <div class="media-body">
+        <h4 class="media-heading">Email</h4>
+        <?php
+        //check if email set
+        if($_SESSION["emailInS"] == "0"){
+          echo "<a href='settings.php?page=email-add' style='color: #77E9F3;'>Add email</a>";
+        } else {
+          echo "<a href='settings.php?page=email-update' style='color: #77E9F3;'>" . $_SESSION["emailInS"] . "</a>";
+        }
+        ?>
+        </div>
+        <div class="media-right media-top">
+        <?php
+        //check it email verified
+        if($_SESSION["email_V_InS"] == 0){
+            echo "<a href='#emailV'><h4><span class='label label-default'>Unverified</span></h4></a>";
+        } else {
+            echo "<h4><span class='label label-success'>Verified</span></h4>";
+        }
+        ?>
+        </div>
+        </div>
+
+        <!-- Zip -->
+        <div class="media" style="padding: 0 20px 0 20px; color: white">
+        <div class="media-body">
+        <h4 class="media-heading">Location</h4>
+        <a href='settings.php?page=location-change' style="color: #77E9F3;">Change Location</a>
+        </div>
+        <div class="media-right media-top">
+        <a href='settings.php?page=location-change' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-globe"></i></h4></a>
+        </div>
+        </div>
+
+        <!-- Password -->
+        <div class="media" style="padding: 0 20px 0 20px; color: white">
+        <div class="media-body">
+        <h4 class="media-heading">Password</h4>
+        <a href='settings.php?page=password-change' style="color: #77E9F3;">Change Password</a>
+        </div>
+        <div class="media-right media-top">
+        <a href='settings.php?page=password-change' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-lock"></i></h4></a>
+        </div>
+        </div>
+
+
+        <hr style="width: 80%; border-color: #adadad;" />
+
+        <!-- Logout -->
+        <div class="media" style="padding: 0 20px 0 20px; color: white">
+        <div class="media-body">
+        <h4><a href='#logout' style='color: white;'>Logout</a></h4>
+        </div>
+        <div class="media-right media-top">
+        <a href='#logout' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-log-out"></i></h4></a>
+        </div>
+        </div>
+
+        <!-- Help -->
+        <div class="media" style="padding: 0 20px 0 20px; color: white">
+        <div class="media-body">
+        <h4><a href='#help' style='color: white;'>Help</a></h4>
+        </div>
+        <div class="media-right media-top">
+        <a href='#help' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-question-sign"></i></h4></a>
+        </div>
+        </div>
+
+        <!-- Help -->
+        <div class="media" style="padding: 0 20px 0 20px; color: white">
+        <div class="media-body">
+        <h4><a href='#feedback' style='color: white;'>Send Feedback</a></h4>
+        </div>
+        <div class="media-right media-top">
+        <a href='#feedback' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-comment"></i></h4></a>
+        </div>
+        </div>
+        <br/>
+
+
       </div><!-- end container -->
 
 
 <script src="../includes/JS/signup.js"></script>
 
-  </body>
+</body>
 </html>
 
 <?php

@@ -7,18 +7,18 @@ this should lead to main.php. -->
 
   //Build Query
   $q = "SELECT
-  admin,
-  birthdate,
-  email,
-  emailVerified,
-  firstname,
-  lastname,
-  password,
-  phone,
-  phoneA,
-  userID,
-  username,
-  zipcode
+  Admin,
+  BirthDate,
+  Email,
+  EmailVerified,
+  FirstName,
+  LastName,
+  Password,
+  Phone,
+  PhoneA,
+  UserID,
+  Username,
+  ZipCode
   FROM users
   WHERE username = \"$username_login\";";
 

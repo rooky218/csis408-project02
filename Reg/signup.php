@@ -12,6 +12,7 @@
 
     //load functions
     require("../includes/PHP/functions.php");
+    
 
     //reset variables, if page is reloaded this will clear out values
     $userNameIn = "";

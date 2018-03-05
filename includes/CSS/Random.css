@@ -1,3 +1,8 @@
+/*Variables*/
+:root {
+  --brand-color: #77E9F3;
+}
+
 .default-icon-bubble {
     background: #d6d6d6;
     width: 50px;
@@ -10,7 +15,7 @@
 }
 
 /*******Login Page background***********/
-#login-bg, #sign-bg {
+#menu-page {
     background: url(../photos/Digital-Dark-Gradient.jpg);
     background-repeat: no-repeat;
     background-position: center center;
@@ -20,6 +25,11 @@
     -o-background-size: cover;
     background-size: cover;
      font-family: 'Roboto', sans-serif;
+}
+
+#main-page {
+    background-color: #11234e;
+    font-family: 'Roboto', sans-serif;
 }
 
 /*******Form Styling - Login Page***********/
@@ -179,10 +189,7 @@ i.icons-1 {
     color: #adadad;
 }
 
-.test-2 {
-    color: hotpink;
 
-}
 
 /*********** forget_met.php accordion************/
 
@@ -209,7 +216,7 @@ i.icons-1 {
 }
 
 .send-bbl {
-  background-color: #77E9F3;
+  background-color: white;
   float: right;
 }
 
@@ -219,8 +226,9 @@ i.icons-1 {
 }
 
 .receive-bbl {
-  background-color: white;
+  background-color: #f38177;
   float: left;
+  color: white;
 }
 
 .receive-bbl p {
@@ -260,6 +268,20 @@ div.custom-form {
   color: white;
 }
 
+div.custom-form-search {
+  background-color: #333333;
+  width: 100%;
+  margin: 0px;
+  padding: 10px;
+  position: fixed;
+  z-index: 10;
+  left: 0;
+  top: 50px;
+  min-height: 50px;
+  height: auto;
+  color: white;
+}
+
 textarea#user-message {
     width: 300px;
     max-height: 100px;
@@ -274,13 +296,31 @@ textarea#user-message {
   height: 40px;
   width: 75px;
   border: none;
-  background-color: #adadad;
+  background-color: #f38177;
   text-transform: uppercase;
-  color: black;
+  color: white;
+}
+
+input#search-bar {
+  width: 250px;
+  height: 30px;
+  overflow: auto;
+}
+
+#my-button-2 {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  height: 30px;
+  width: 75px;
+  border: none;
+  background-color: #f38177;
+  text-transform: uppercase;
+  color: white;
 }
 
 div.ben-navbar {
-  background-color: #333333;
+  background-color: #f38177;
   width: 100%;
   margin: 0px;
   padding: 0px;
@@ -288,32 +328,36 @@ div.ben-navbar {
   z-index: 15;
   top: 0;
   left: 0;
-  height: 70px;
+  height: 50px;
   color: white;
+
+  -webkit-box-shadow: 0px -5px 23px 7px rgba(0,0,0,0.31);
+  -moz-box-shadow: 0px -5px 23px 7px rgba(0,0,0,0.31);
+  box-shadow: 0px -5px 23px 7px rgba(0,0,0,0.31);
 }
 
-.ben-navbar h2 {
+.ben-navbar h4 {
   color: white;
   text-align: center;
-  margin: 10 0 0 0;
+  margin: 16px 0 0 0;
   padding: 0;
   display: block;
 }
 
 a.back-ben-2 {
   position: absolute;
-  font-size: 18pt;
+  font-size: 14pt;
   left: 7%;
-  top: 25px;
-  color: #adadad;
+  top: 16px;
+  color: white;
 }
 
 a.user-ben-2 {
   position: absolute;
-  font-size: 18pt;
+  font-size: 14pt;
   right: 7%;
-  top: 25px;
-  color: #adadad;
+  top: 16px;
+  color: white;
 }
 
 div.new-message-ben {
@@ -326,22 +370,27 @@ div.new-message-ben {
   border-radius: 50%;
 }
 
-.avatar-circle {
+.circle-button {
   width: 50px;
   height: 50px;
-  background-color: hotpink;
+  background-color: #f38177;
   text-align: center;
   border-radius: 50%;
   -webkit-border-radius: 50%;
   -moz-border-radius: 50%;
+  position: fixed;
+  bottom: 50px;
+  right: 30px;
+
+  -webkit-box-shadow: 0px 0px 9px 2px rgba(0,0,0,0.31);
+  -moz-box-shadow: 0px 0px 9px 2px rgba(0,0,0,0.31);
+  box-shadow: 0px 0px 9px 2px rgba(0,0,0,0.31);
 }
 
-.initials {
+.circle-button-text {
   position: relative;
-  top: 25px; /* 25% of parent */
-  font-size: 50px; /* 50% of parent */
-  line-height: 50px; /* 50% of parent */
+  top: 13px;
+  font-size: 18pt;
   color: #fff;
-  font-family: "Courier New", monospace;
   font-weight: bold;
 }

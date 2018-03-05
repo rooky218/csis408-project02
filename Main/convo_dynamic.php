@@ -16,30 +16,24 @@ message results here -->
     //header("location: ./../Main/main.php");
   }
 
-  //Set Page title and load header
-  $title = "Conversation"; //set page title
-  require("../includes/headers/header_main.php");
+
 
   //load functions
   require("../includes/PHP/functions.php");
 
   //load DB
-  require("../includes/PHP/DB/dblogin_test.php");
+  require("../includes/PHP/DB/dblogin_final.php");
 
   //set variables
   $message = $_POST["user-message"];
-  $_POST["user-message"] = null;
-  $roomID = $_GET["room"]; 
+  $roomID = $_GET["room"];
   $access_allowed = false;
   $whoAmI = $_SESSION["userIDInS"];
-  //$permited_userID[] --- array declared and set in user_convo_check.php
 
   //confirm if you have access to room
-    //check DB
   require("../includes/PHP/DB/user_convo_check.php");
     //compare results from DB
   for($i = 0; $i < count($permited_userID); $i++){
-    echo $permited_userID[$i];
     if($_SESSION["userIDInS"] == $permited_userID[$i]){
       $access_allowed = true;
     }
@@ -47,16 +41,19 @@ message results here -->
     //if not in chat, redirect home
   if($access_allowed == false){
     //if access denied, redirect to main page
-    header("location: ./main.php");
+    //header("location: ./main.php");
+    echo "<br/><br/><h1 style='color: white;'>User Not Allowed</h1>";
   }
+
+  //Set Page title and load header
+  $title = "Chatting: " . $permited_names[1];
+  //echo "Goes Here: " . $permited_names[1];
+  require("../includes/headers/header_main.php");
 
   //if there is a sent message
   if(myisset($message)){
     //if set, upload meesage to DB
-    echo "My message: " . $message;
     require("../includes/PHP/DB/sent_message.php");
-    //reset message
-    unset($message);
   }
 
   //load messages
@@ -70,39 +67,45 @@ message results here -->
 
 <script src="../includes/JS/convo.js"></script>
 
-    <body id="login-bg" style="margin-bottom: 70px;" onload="setMyBox();">
+    <body id="main-page"
+    style="margin: 55px 0 70px 0; background-color: #f2f2f2;"
+    onload="setMyBox();">
 
-      <?php
-      //load page header
-       //include("../includes/headers/page_topnav.php");
-       ?>
+    <?php
+        //set header options
+        $back_link = "main_dynamic.php";
+        $back_icon = "glyphicon-chevron-left";
+        $options_link = "#";
+        $options_icon = "glyphicon-user";
+        $page_title = $permited_names[1];
+        require("../includes/headers/page_topnav.php");
+    ?>
 
-        <div id="convo-container" class="container">
+    <div id="convo-container" class="container">
 
-<?php
+    <?php
 
+    if(myisset($row)){
+      echo "<ul class='message-screen'>";
+      while($row = $r->fetch_assoc()){
+        //If user sent it
+        if($row["SenderID"] == $whoAmI){
+          echo "<li class='message-bbl send-bbl'>
+          <p>" . $row["TextBody"] . "</p>
+          </li>";
+        } else {
+          //sent by other user
+          echo "<li class='message-bbl receive-bbl'>
+          <p>" . $row["TextBody"] . "</p>
+          </li>";
+        }
 
-  if(myisset($row)){
-    echo "<ul class='message-screen'>";
-  while($row = $r->fetch_assoc()){
-    //If user sent it
-    if($row["sentFromUserID"] == $whoAmI){
-      echo "<li class='message-bbl send-bbl'>
-      <p>" . $row["message"] . "</p>
-      </li>";
-    } else {
-      //sent by other user
-      echo "<li class='message-bbl receive-bbl'>
-      <p>" . $row["message"] . "</p>
-      </li>";
-    }
+        //If user received it
+        }
+          echo "</ul>";
+        }
 
-  //If user received it
-  }
-  echo "</ul>";
-  }
-
-?>
+      ?>
 
       </div><!-- end container -->
 
@@ -110,7 +113,7 @@ message results here -->
           <div class="custom-form">
             <form name="myForm"
             method="post"
-            action="convo.php"
+            action="convo_dynamic.php?room=<?php echo $roomID;?>"
             class="">
               <textarea class="form-control autoExpand"
               rows="1"

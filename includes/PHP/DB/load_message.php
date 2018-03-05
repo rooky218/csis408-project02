@@ -4,20 +4,21 @@ this should lead to main.php. -->
 
    //build query
    $q =
-   "SELECT messageID,
-   message,
-   sentFromUserID,
-   sentToUserID,
-   timedatemessage
-   FROM conversation
-   WHERE roomID = \"$roomID\"
-   ORDER BY timedatemessage ASC;";
+   "SELECT MessageID,
+   TextBody,
+   SenderID,
+   RecipientID,
+   DeliverTime
+   FROM Messages
+   WHERE RoomID = \"$roomID\"
+   ORDER BY DeliverTime ASC;";
 
 		$r = @mysqli_query($my_db, $q); // Run the query.
 
 		if ($r) { // If results came back
-        echo "<p>message sent ";
         $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+
+
     /*    while($row = $r->fetch_assoc()) {
           echo "<br> Username: ". $row["sentFromUserID"] .
           " - MessageID: " . $row["messageID"];

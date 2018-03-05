@@ -1,26 +1,24 @@
 <!-- This checks POST data from login.php against Database. If login works,
 this should lead to main.php. -->
 <?php
-   //connect to DB
-   //include("../DB/dblogin.php");
-   require("dblogin_test.php");
+
 
   //Build Query
   $q = "SELECT
-  admin,
-  birthday,
-  email,
-  emailV,
-  fname,
-  lname,
-  password,
-  phone,
-  phoneA,
-  userID,
-  username,
-  zip
-  FROM users
-  WHERE username = \"$username_login\";";
+  Admin,
+  BirthDate,
+  Email,
+  EmailVerified,
+  FirstName,
+  LastName,
+  UserPassword,
+  Phone,
+  PhoneA,
+  UserID,
+  Username,
+  ZipCode
+  FROM Users
+  WHERE Email = \"$email_login\";";
 
 		$r = @mysqli_query($my_db, $q); // Run the query.
 
@@ -28,32 +26,33 @@ this should lead to main.php. -->
           echo "results back ";
 					$row = mysqli_fetch_array($r, MYSQLI_ASSOC);
 
-					$usernameDB = $row["username"];
+					$emailDB = $row["Email"];
 
-					$passwordDB = $row["password"];
+					$passwordDB = $row["UserPassword"];
 
-					if($username_login == $usernameDB
+					if($email_login == $emailDB
           && $password_login == $passwordDB){
             //IF data matches, login session
 						$_SESSION["LOGGED_IN"] = true;
 						$_SESSION["timeout"] = time();	//sets timer for auto logout
-            if($row["admin"] == 1){
+            if($row["Admin"] == 1){
               $_SESSION["AdminAccess"] = true;
             } else {
               $_SESSION["AdminAccess"] = false;
             }
 
             //Load user information into session
-            $_SESSION["userNameInS"] = $row["username"];
-            $_SESSION["userIDInS"] = $row["userID"];
-            $_SESSION["emailInS"] = $row["email"];
-            $_SESSION["email_V_InS"] = $row["email-verified"];
-            $_SESSION["passwordInS"] = $row["password"];
-            $_SESSION["firstNameInS"] = $row["fname"];
-            $_SESSION["lastnameInS"] = $row["lname"];
-            $_SESSION["phoneInS"] = $row["phone"];
-            $_SESSION["phone_a_InS"] = $row["phone-address"];
-            $_SESSION["zipInS"] = $row["zip"];
+            $_SESSION["userNameInS"] = $row["Username"];
+            $_SESSION["userIDInS"] = $row["UserID"];
+            $_SESSION["emailInS"] = $row["Email"];
+            $_SESSION["email_V_InS"] = $row["EmailVerified"];
+            $_SESSION["passwordInS"] = $row["Password"];
+            $_SESSION["firstNameInS"] = $row["FirstName"];
+            $_SESSION["lastnameInS"] = $row["LastName"];
+            $_SESSION["phoneInS"] = $row["Phone"];
+            $_SESSION["phone_a_InS"] = $row["PhoneA"];
+            $_SESSION["zipInS"] = $row["ZipCode"];
+            $_SESSION["passwordInS"] = $row["UserPassword"];
 
 
             //upon load, redirect to main page

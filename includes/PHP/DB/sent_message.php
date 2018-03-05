@@ -3,12 +3,12 @@ this should lead to main.php. -->
 <?php
 
    //build query
-   $q = "INSERT INTO conversation (
-     message,
-     sentFromUserID,
-     sentToUserID,
-     timedatemessage,
-      roomID)
+   $q = "INSERT INTO messages (
+     TextBody,
+     SenderID,
+     RecipientID,
+     DeliverTime,
+      RoomID)
      VALUES (
        \"$message\",
        \"$whoAmI\",
@@ -19,7 +19,6 @@ this should lead to main.php. -->
 		$r = @mysqli_query($my_db, $q); // Run the query.
 
 		if ($r) { // If success
-        echo "<p>message sent ";
 
 		} else { //else -- could not access data base or no results back
 			// Public message:

@@ -20,15 +20,15 @@
 
 ?>
 
-<body id="login-bg" style="margin:70px 0 0 0;">
+<body id="main-page" style="margin:50px 0 0 0;">
   <?php
     //set header options
-    $back_link = 0;
-    $back_icon = "glyphicon-chevron-left";
-    $options_link = "#";
+    $back_link = NULL;
+    $back_icon = NULL;
+    $options_link = "../Account/dashboard.php";
     $options_icon = "glyphicon-user";
     $page_title = "Messages";
-    require("../includes/headers/page_topnav.php");?>
+    require("../includes/headers/page_no_left.php");?>
 
     <div class="container-fluid" style="padding: 0;">
 
@@ -43,25 +43,10 @@
     </div>
 
 
-    <div style='width: 50px;
-    height: 50px;
-    background-color: #adadad;
-    text-align: center;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    -moz-border-radius: 50%;
-    position: fixed;
-    bottom: 50px;
-    right: 30px;
-    '>
-      <span
-      style='position: relative;
-      top: 13px;
-      font-size: 18pt;
-      color: #fff;
-      font-weight: bold;'>
+    <div class="circle-button">
+      <span class="circle-button-text">
       <a class="glyphicon glyphicon-comment"
-      href="#"
+      href="newmessage.php"
       style="color: white;"></a></span>
     </div>
 

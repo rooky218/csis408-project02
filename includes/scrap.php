@@ -69,3 +69,50 @@
                   //$invalid_exceeded_attempts = true;
                   $change_display = true;
                 }
+
+
+                <br/>
+                <br/>
+                <h3 class='test text-center'>Change Username</h3>
+                <br/>
+                <br/>
+                <h4 class='test text-center' style='color:#77E9F3;'>
+                  <?php
+                  //load username from DB
+                  echo getUsername();
+                  ?>
+                </h4>
+
+                <br/><br/>
+
+                <!-- Login Form -->
+                <form method='post'
+                  action='confirm.php?page=username'>
+
+                <!-- Email In -->
+                <label class='test'>Enter new username</label>
+                  <input id='username'
+                     name='username'
+                     type='text'
+                     class='form-control login-ben'
+                     placeholder='Username'
+                     style='text-align: center;' />
+                <br/>
+
+                <!-- Password In -->
+                <label class='test'>Enter password to save change</label>
+                <input id='password'
+                   name='password'
+                   type='text'
+                   class='form-control login-ben'
+                   placeholder='Password'
+                   style='text-align: center;' />
+
+                <br/><br/>
+                <!-- submit button -->
+                <button id='login-submit' type='submit' class='btn btn-default btn-lg btn-block'>Submit</button>
+
+                <a class='btn btn-default btn-lg btn-block'
+                   href='dashboard.php'>Go Back</a> <!-- back to login.php -->
+
+                </form>

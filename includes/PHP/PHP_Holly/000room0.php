@@ -11,7 +11,8 @@ if(!$db) {
 //This needs to be retrieved from the database
 $lastRoomIDNumber = row[?];
 */
-//this will eventually be  $lastRoomIDNumber + 1; but for testing purposes it is set to be 2 
+//this will eventually be  $lastRoomIDNumber + 1; but for testing purposes it is set to be 2
+
 $roomIDNumber = 1;
 $roomID = 'room'.$roomIDNumber.'.php';
 echo "your room number is: " . $roomIDNumber . '<br><br><br>';
@@ -22,5 +23,5 @@ $txt = "<?php include '000roomCode.php'; ?>" ;
 fwrite($myfile, $txt);
 
 fclose($myfile);
-echo "<td align = left><a href='$roomID'>Click here to be taken to your room</a></td>"; 
+echo "<td align = left><a href='$roomID'>Click here to be taken to your room</a></td>";
 ?>

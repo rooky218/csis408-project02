@@ -9,6 +9,9 @@
     //header("location: ./../Main/main.php");
   }
 
+  //connect to DB
+  require("../includes/PHP/DB/dblogin_final.php");
+
   //Set Page title and load header
   $title = "Login"; //set page title
   require("../includes/headers/header_main.php");
@@ -17,7 +20,7 @@
   require("../includes/PHP/functions.php");
 
   //set variables
-  $username_login = $_POST["username"];
+  $email_login = $_POST["email"]; //this is now checking email
   $password_login = $_POST["password"];
   $missing_password = false;
   $missing_username = false;
@@ -26,11 +29,11 @@
   $did_not_exist = false;
 
   //check for POST Data
-  if(myisset($username_login && $password_login)){
+  if(myisset($email_login && $password_login)){
     //if POST is set -- run db login query
     require("../includes/PHP/DB/loginscript.php");
 
-  } elseif(myisset($username_login)){
+  } elseif(myisset($email_login)){
     //return error - password missing
     $missing_password = true;
   } elseif(myisset($password_login)){
@@ -43,7 +46,7 @@
 <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
 
 
-<body id="login-bg">
+<body id="menu-page">
 
     <!-- page header -->
     <div class="top-m">
@@ -60,8 +63,8 @@
              <!-- Email In -->
             <div class="inner-addon left-addon">
                 <i class="glyphicon glyphicon-envelope"></i>
-                <input id="username"
-                       name="username"
+                <input id="email"
+                       name="email"
                        type="text"
                        class="form-control login-ben"
                        placeholder="Email"/
@@ -86,15 +89,15 @@
             <!-- php triggered errors -->
             <?php
                 if($missing_password == true){
-                echo "<div class='alert alert-danger'>Please enter a password</div>";
+                echo "<div class='alert alert-danger'>Please enter your password</div>";
                 }
 
                 if($missing_username == true){
-                echo "<div class='alert alert-danger'>Please enter a username</div>";
+                echo "<div class='alert alert-danger'>Please enter your email</div>";
                 }
 
                 if($did_not_exist == true){
-                echo "<div class='alert alert-danger'>Username does not exist</div>";
+                echo "<div class='alert alert-danger'>Email does not exist</div>";
                 }
 
                 //should add an error for too many login attempts
