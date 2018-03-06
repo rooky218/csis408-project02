@@ -18,6 +18,9 @@
   //load DB
   require("../includes/PHP/DB/dblogin_final.php");
 
+  //load Queries
+  require("../includes/PHP/DB/profile_settings/set_get.php");
+
 ?>
 
 <body id="main-page" style="margin:50px 0 0 0;">
@@ -37,7 +40,8 @@
 
       <?php
       //load messages
-      require("../includes/PHP/DB/all_messages.php");
+      //require("../includes/PHP/DB/all_messages.php");
+      getRooms();
       ?>
 
     </div>

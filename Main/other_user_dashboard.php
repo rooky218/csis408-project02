@@ -28,6 +28,7 @@ When viewing other users, other infomation will be displayed, with buttons to Me
     //$age - set in return_bd.php
 
     $whotheyare = $_GET["user"];
+    $roomID = $_GET["room"];
 
     //if not logged in add header
     $title = getFullname($whotheyare); //set page title
@@ -42,14 +43,14 @@ When viewing other users, other infomation will be displayed, with buttons to Me
   <body id="menu-page">
 
     <!-- image container -->
-    <div class="account-background"></div><!--blur profile image-->
-    <div class="account-transparent"></div><!-- dark overlay -->
+    <div class="account-background-other"></div><!--blur profile image-->
+    <div class="account-transparent-other"></div><!-- dark overlay -->
 
     <div class="content-container">
         <br/>
         <!-- back to last page icon link -->
         <a class="glyphicon glyphicon-chevron-left ben-back-icon"
-           href="../Main/main_dynamic.php"
+           href="../Main/convo_dynamic.php?room=<?php echo $roomID;?>"
            style="position: absolute;
                   top: 40px;
                   left: 7%;
@@ -59,7 +60,7 @@ When viewing other users, other infomation will be displayed, with buttons to Me
 
         <h3 class="">Profile</h3>
 
-        <img src="../includes/photos/19884356_10154716410676409_7622955142588271372_n.jpg"
+        <img src="../includes/photos/default-user.png"
             height="125px"
             width="125px"
             class="img-circle">
@@ -102,7 +103,7 @@ When viewing other users, other infomation will be displayed, with buttons to Me
         <!-- Add Friend -->
         <div class="media" style="padding: 0 20px 0 20px; color: white">
         <div class="media-body">
-        <h4><a href='#help' style='color: white;'>Add Friend</a></h4>
+        <h4><a href='#help' style='color: white;'>Add to Contacts</a></h4>
         </div>
         <div class="media-right media-top">
         <a href='#help' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-plus"></i></h4></a>

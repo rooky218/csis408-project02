@@ -671,6 +671,35 @@ function getAge($user = 0){
   unset($r);
 } //end function
 
+function getDatetime($messageID){
+  //link to DB
+  global $my_db;
+
+  //build query
+  $q =
+  "SELECT DeliverTime
+  FROM Messages
+  WHERE MessageID = \"$messageID\";";
+
+  // Run the query.
+  $r = @mysqli_query($my_db, $q);
+
+  // If results came back
+  if ($r) {
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    $value = $row["DeliverTime"];
+    return $value;
+  } else {
+    // Public message:
+    echo "<p>We could not access the database</p>";
+    // Debugging message:
+    echo "<p>" . mysqli_error($my_db);
+  }
+  //unset $q
+  unset($q);
+  unset($r);
+} //end function
+
 //set values
 function setUsername($newValue){
 
@@ -1075,5 +1104,375 @@ function setEmailV($newValue){
     unset($q);
     unset($r);
 }//end function
+
+function setDatetime($newValue = 0){
+
+  //link to DB
+  global $my_db;
+
+  if($newValue == 0){
+    date_default_timezone_set("America/New_York");
+    $newValue = date("Y-m-d h:i:s");
+  }
+
+  return $newValue;
+
+  /*
+   //build query
+   $q =
+   "UPDATE Messages
+   SET DeliverTime = \"$newValue\";";
+
+   //format 2018-03-08 03:19:29
+
+   // Run the query.
+   $r = @mysqli_query($my_db, $q);
+
+    // If results came back
+		if (!$r){
+			// Public message:
+   		echo "<p>We could not access the database</p>";
+     	// Debugging message:
+    	echo "<p>" . mysqli_error($my_db);
+		}
+
+    //unset $q
+    unset($q);
+    unset($r);
+    */
+}//end function
+
+//task oriented Queires
+
+function whoInRoom($roomID){
+  //link to DB
+  global $my_db;
+
+  //build Query
+
+  $q =
+    "SELECT SentFromID
+    FROM Chatrooms
+    WHERE RoomID = \"$roomID\";";
+
+  //Run Q
+  $r = @mysqli_query($my_db, $q);
+
+  //Process results
+  $i = 0;
+  if ($r){
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    do{
+      $permited_userID[$i] = $row["SentFromID"];
+      $i++;
+    } while($row = mysqli_fetch_array($r));
+
+  } else {
+    //DB could not be reached
+    echo "<p>" . mysqli_error($my_db) . "</p>";
+    echo "DB could not be reached";
+  }
+
+  //unset variables
+  unset($i);
+  unset($r);
+  unset($q);
+
+  $permited_userID = array_unique($permited_userID);
+  return $permited_userID;
+
+}//end whoInRoom
+
+function sendMessage($roomID, $message){
+  //link to DB
+  global $my_db;
+
+  //variables
+  $senderID = $_SESSION["userIDInS"];
+  $now = setDatetime();
+  //build query
+  $q = "INSERT INTO messages (
+    TextBody,
+    DeliverTime,
+    RoomID)
+    VALUES (
+    \"$message\",
+    \"$now\",
+    \"$roomID\");";
+
+    $r = @mysqli_query($my_db, $q); // Run the query.
+
+    if ($r) {
+      $last_id = mysqli_insert_id($my_db);
+      //echo "<br> Last ID: " . $last_id . "<br/>";
+    } else {
+      echo "<p>" . mysqli_error($my_db) . "<br /><br /> Query: " . $q . '</ p >';
+      echo "DB could not be reached";
+    }
+
+    //unset $q
+    unset($q);
+    unset($r);
+
+    $q = "INSERT INTO Chatrooms (
+    RowID,
+    RoomID,
+    SentFromID,
+    MessageID)
+    VALUES (
+    NULL,
+    \"$roomID\",
+    \"$senderID\",
+    \"$last_id\");";
+
+    $r = @mysqli_query($my_db, $q); // Run the query.
+
+    if ($r) { // If success
+    } else { //else -- could not access data base or no results back
+      // Public message:
+
+        echo "<p>We could not access the database</p>";
+        // Debugging message:
+        echo "<p>" . mysqli_error($my_db) . "<br /><br /> Query: " . $q . '</ p >';
+        echo "DB could not be reached";
+    }
+
+    //unset $q
+    unset($q);
+    unset($r);
+
+}
+
+function createRoom($userID){
+  //find last roomID - sort by ASC, return number, add one
+
+  //link to DB
+  global $my_db;
+
+  //build query - return roomID
+  $q =
+  "SELECT *
+  FROM Chatrooms
+  ORDER BY RoomID
+  DESC LIMIT 1";
+
+   $r = @mysqli_query($my_db, $q);
+
+  if($r){
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    $roomID = $row["RoomID"];
+    $roomID++;
+  } else {
+  //Database no results back
+  echo "<p>" . mysqli_error($my_db) . "<br /><br /> Query: " . $q . '</ p >';
+  echo "DB could not be reached";
+  }
+
+   //unset $q
+   unset($q);
+
+
+   //build query - return roomID
+   for($i = 0; $i < count($userID); $i++){
+   $q =
+   "INSERT INTO Chatrooms (
+     RowID,
+     RoomID,
+     SentFromID,
+     MessageID)
+     VALUES (
+       NULL,
+       \"$roomID\",
+       \"$userID[$i]\",
+       NULL);";
+
+    $r = @mysqli_query($my_db, $q);
+
+   if($r){
+     return $roomID;
+   } else {
+   //Database no results back
+   echo "<p>" . mysqli_error($my_db) . "<br /><br /> Query: " . $q . '</ p >';
+   echo "DB could not be reached";
+   }
+ }
+
+}
+
+function addUserToRoom($userID){
+
+}
+
+function getMessages($roomID, $sender){
+  //link to DB
+  global $my_db;
+
+  //build query
+  $q =
+  "SELECT Messages.MessageID,
+  Messages.TextBody,
+  Messages.RoomID,
+  Messages.DeliverTime,
+  Chatrooms.SentFromID
+  FROM Chatrooms
+  INNER JOIN Messages
+  ON Messages.MessageID = Chatrooms.MessageID
+  WHERE Messages.RoomID = \"$roomID\"
+  ORDER BY DeliverTime ASC;";
+
+
+  $r = @mysqli_query($my_db, $q);
+
+  if($r){
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+      if(myisset($row)){
+        if(myisset($row["MessageID"])){
+        echo "<ul class='message-screen'>";
+        do{
+          //If user sent it
+          if($row["SentFromID"] == $sender){
+          echo "<li class='message-bbl send-bbl'>
+          <p>" . $row["TextBody"] . "</p>
+          </li>";
+          } else {
+          //sent by other user
+          echo "<li class='message-bbl receive-bbl'>
+          <p>" . $row["TextBody"] . "</p>
+          </li>";
+          }
+        } while($row = mysqli_fetch_array($r));
+
+        echo "</ul>";
+      }
+    }
+  }
+
+   //unset $q
+   unset($q);
+}
+
+function getRooms($user = 0){
+  //link to DB
+  global $my_db;
+
+  //variable
+  if($user == 0){
+    $user = $_SESSION["userIDInS"];
+  }
+  //build Query
+
+  $q =
+    "SELECT Chatrooms.RoomID,
+    Chatrooms.SentFromID,
+    Messages.MessageID,
+    Messages.TextBody,
+    Messages.DeliverTime
+    FROM Messages
+    INNER JOIN Chatrooms
+    ON Messages.MessageID = Chatrooms.MessageID
+    WHERE Chatrooms.SentFromID = \"$user\"
+    GROUP BY RoomID
+    ORDER BY DeliverTime DESC;";
+
+  //Run Q
+  $r = @mysqli_query($my_db, $q);
+
+  //Process results
+  $i = 0;
+  if ($r){
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    //$whoIsHere = whoInRoom($row["RoomID"]);
+    //echo "roomid: " . $row["RoomID"];
+    $i = 0;
+    do{
+      //find who in room
+      $whoIsHere = whoInRoom($row["RoomID"]);
+
+      //create initial bubble
+      $initial_first = getFirstname($whoIsHere[$i]);
+      $initial_last = getLastname($whoIsHere[$i]);
+      ucwords($initial_first);
+      ucwords($initial_last);
+      $initial_first = substr($initial_first, 0, 1);
+      $initial_last = substr($initial_last, 0, 1);
+      $initials_full = $initial_first . $initial_last;
+
+      //Remove primary user from array
+      for($i = 0; $i < count($whoIsHere); $i++){
+        if($whoIsHere[$i] == $user){
+          //$access_allowed = true;
+          $whoIsHere[$i] = null;
+        }
+      }
+
+      //return all names
+      $title = null;
+      for($i = 0; $i <= count($whoIsHere); $i++){
+        if($title == null){
+          if($whoIsHere[$i] != null){
+            $title = getFullname($whoIsHere[$i]);
+          }
+        } else {
+          if($whoIsHere[$i] != null){
+            $title = $title . ", " . getFullname($whoIsHere[$i]);
+          }
+        }
+      }
+
+
+      //output results to page
+
+      echo "<a href='convo_dynamic.php?room=" . $row["RoomID"] . "'
+          class='list-group-item'
+          style='background-color: rgba(255, 255, 255, 0.85);'>
+            <div class='media'>
+            <div class='media-left'>
+              <div style='width: 40px;
+              height: 40px;
+              margin-top: 7px;
+              background-color: #737373;
+              text-align: center;
+              border-radius: 50%;
+              -webkit-border-radius: 50%;
+              -moz-border-radius: 50%;
+              '>
+                <span
+                style='position: relative;
+                top: 9px;
+                font-size: 14pt;
+                color: #fff;
+                '>
+                " . $initials_full ."</span>
+              </div>
+                </div>
+            <div class='media-body' style='color: black;'>
+                <h4 class='media-heading'>". $title ."</h4>
+                <p>". $row["TextBody"] ."</p>
+            </div>
+            </div>
+            </a>";
+
+            $i++;
+    } while($row = mysqli_fetch_array($r));
+
+  } else {
+    //DB could not be reached
+    echo "<p>" . mysqli_error($my_db) . "</p>";
+    echo "DB could not be reached";
+  }
+
+  //unset variables
+  unset($i);
+  unset($r);
+  unset($q);
+
+}
+
+function formatDateTime(){
+
+}
+
+
+
 
 ?>

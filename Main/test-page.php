@@ -9,25 +9,27 @@ require("../includes/PHP/DB/dblogin_final.php");
 //load Queries
 require("../includes/PHP/DB/profile_settings/set_get.php");
 
-$username = "rooky218";
-if(checkUsername($username)){
-  echo "username exists";
-} else {
-  echo "username does not exist";
-}
+//format 2018-03-08 03:19:29
+echo "Hello Ben <br/>";
 
-$phone = "4342197737";
-if(checkPhone($phone)){
-  echo "phone exists";
-} else {
-  echo "phone does not exist";
-}
+$message = "This is a fantastic test";
+$room = 5;
+$receiver = 2;
 
-$email = "ben.walker218@gmail.com";
-if(checkEmail($email)){
-  echo "email exists";
-} else {
-  echo "email does not exist";
-}
+$_SESSION["userIDInS"] = 1;
 
+//sendMessage(5, $message);
+$user[0] = 1;
+$user[1] = 2;
+//$user[2] = 3;
+
+//echo createRoom($user);
+//print_r($user);
+
+//sendMessage(25, $message);
+//getRooms(1);
+
+createRoom($user);
+
+//echo print_r(whoInRoom(25));
 ?>

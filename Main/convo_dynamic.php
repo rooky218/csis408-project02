@@ -24,40 +24,63 @@ message results here -->
   //load DB
   require("../includes/PHP/DB/dblogin_final.php");
 
+  //load Queries
+  require("../includes/PHP/DB/profile_settings/set_get.php");
+
   //set variables
   $message = $_POST["user-message"];
   $roomID = $_GET["room"];
   $access_allowed = false;
   $whoAmI = $_SESSION["userIDInS"];
 
-  //confirm if you have access to room
-  require("../includes/PHP/DB/user_convo_check.php");
-    //compare results from DB
-  for($i = 0; $i < count($permited_userID); $i++){
-    if($_SESSION["userIDInS"] == $permited_userID[$i]){
+  //Who is in room
+  $whoIsHere = whoInRoom($roomID);
+  $whoIsHere2 = whoInRoom($roomID); //User id exclude
+
+  //echo print_r($whoIsHere2);
+
+  //Set permissions, remove primary user from array
+  for($i = 0; $i < count($whoIsHere); $i++){
+    if($whoIsHere[$i] == $whoAmI){
       $access_allowed = true;
+      $whoIsHere2[$i] = null;
     }
-  }//end for
-    //if not in chat, redirect home
+  }
+
+  //if not allowed, kick out
   if($access_allowed == false){
-    //if access denied, redirect to main page
-    //header("location: ./main.php");
-    echo "<br/><br/><h1 style='color: white;'>User Not Allowed</h1>";
+    echo "User Not Allowed";
+    //header(./main_dynamic.php)
+  }
+
+  //set title, and menu title with OTHER user Full Names
+  $title = null;
+  for($i = 0; $i <= count($whoIsHere2); $i++){
+    if($title == null){
+      if($whoIsHere2[$i] != null){
+        $title = getFullname($whoIsHere2[$i]);
+      }
+    } else {
+      if($whoIsHere2[$i] != null){
+        $title = $title . ", " . getFullname($whoIsHere2[$i]);
+      }
+    }
   }
 
   //Set Page title and load header
-  $title = "Chatting: " . $permited_names[1];
-  //echo "Goes Here: " . $permited_names[1];
+
   require("../includes/headers/header_main.php");
 
   //if there is a sent message
   if(myisset($message)){
-    //if set, upload meesage to DB
-    require("../includes/PHP/DB/sent_message.php");
+      //send message will go to each user in room (internal loop in function)
+      sendMessage($roomID, $message);
   }
 
   //load messages
-  require("../includes/PHP/DB/load_message.php");
+  //require("../includes/PHP/DB/load_message.php");
+  //getMessages($roomID, $whoAmI);
+
 
 
 
@@ -75,37 +98,15 @@ message results here -->
         //set header options
         $back_link = "main_dynamic.php";
         $back_icon = "glyphicon-chevron-left";
-        $options_link = "#";
+        $options_link = "other_user_dashboard.php?user=". 2 . "&room=". $roomID;
         $options_icon = "glyphicon-user";
-        $page_title = $permited_names[1];
+        $page_title = $title;
         require("../includes/headers/page_topnav.php");
     ?>
 
     <div id="convo-container" class="container">
 
-    <?php
-
-    if(myisset($row)){
-      echo "<ul class='message-screen'>";
-      while($row = $r->fetch_assoc()){
-        //If user sent it
-        if($row["SenderID"] == $whoAmI){
-          echo "<li class='message-bbl send-bbl'>
-          <p>" . $row["TextBody"] . "</p>
-          </li>";
-        } else {
-          //sent by other user
-          echo "<li class='message-bbl receive-bbl'>
-          <p>" . $row["TextBody"] . "</p>
-          </li>";
-        }
-
-        //If user received it
-        }
-          echo "</ul>";
-        }
-
-      ?>
+    <?php echo getMessages($roomID, $whoAmI);?>
 
       </div><!-- end container -->
 
