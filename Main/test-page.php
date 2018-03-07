@@ -1,35 +1,59 @@
-<?php
+<div class="custom-form">
+  <form>
+    <textarea class="form-control autoExpand"
+    rows="1"
+    id="user-message"
+    name="user-message"></textarea>
 
-//load functions
-require("../includes/PHP/functions.php");
+    <button id="my-button-1" type="submit"
+    class="btn btn-default" onsubmit="sendMessage">Submit</button>
 
-//load DB
-require("../includes/PHP/DB/dblogin_final.php");
+  </form>
+</div>
+<script>
+function sendMessage() {
+    var jsmessage = getElementById("user-message").innerHTML;
+    console.log("message: " + jsmessage);
 
-//load Queries
-require("../includes/PHP/DB/profile_settings/set_get.php");
+    if (window.XMLHttpRequest) {
+        // code for IE7+, Firefox, Chrome, Opera, Safari
+        xmlhttp = new XMLHttpRequest();
+    } else {
+        // code for IE6, IE5
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+            document.getElementById("convo-container").innerHTML = this.responseText;
+        }
+    };
+    xmlhttp.open("GET","test3.php?<?php echo "room=1&message=";?>" + jsmessage, true);
+    xmlhttp.send();
+}
+</script>
 
-//format 2018-03-08 03:19:29
-echo "Hello Ben <br/>";
+//link to DB
+global $my_db;
 
-$message = "This is a fantastic test";
-$room = 5;
-$receiver = 2;
+//variable
+if($user == 0){
+  $user = $_SESSION["userIDInS"];
+}
+//build Query
 
-$_SESSION["userIDInS"] = 1;
+$q =
+  "SELECT DISTINCT SentFromID
+  FROM Chatrooms
+  WHERE RoomID = \"$roomID\"";
 
-//sendMessage(5, $message);
-$user[0] = 1;
-$user[1] = 2;
-//$user[2] = 3;
 
-//echo createRoom($user);
-//print_r($user);
+//Run Q
+$r = @mysqli_query($my_db, $q);
 
-//sendMessage(25, $message);
-//getRooms(1);
-
-createRoom($user);
-
-//echo print_r(whoInRoom(25));
-?>
+//Process results
+$i = 0;
+if ($r){
+  $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+  //$whoIsHere = whoInRoom($row["RoomID"]);
+  //echo "roomid: " . $row["RoomID"];
+  $i = 0;

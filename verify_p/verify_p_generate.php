@@ -6,16 +6,7 @@
   require("../includes/PHP/functions.php");
 
     //if sent from confirm.php
-    if(myisset($_SESSION["temp-phone"])){
-      $phone = $_SESSION["temp-phone"];
-      $exit = "location: ./../Account/dashboard.php";
-    } else {
-      //if sent from Registration
-      $phone = $_SESSION["phoneInA"];
-      $exit = "location: ./../Main/convo_dynamic.php";
-    }
-
-
+    $phone = $_SESSION["phoneInS"];
 
     //reset lockout counter - testing only
     $_SESSION['counter_pv'] = 1;

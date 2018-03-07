@@ -9,15 +9,18 @@
     //header("location: ./../Main/main.php");
   }
 
-  //connect to DB
+  //load functions
+  require("../includes/PHP/functions.php");
+
+  //load DB
   require("../includes/PHP/DB/dblogin_final.php");
+
+  //load Queries
+  require("../includes/PHP/DB/profile_settings/set_get.php");
 
   //Set Page title and load header
   $title = "Login"; //set page title
   require("../includes/headers/header_main.php");
-
-  //load functions
-  require("../includes/PHP/functions.php");
 
   //set variables
   $email_login = $_POST["email"]; //this is now checking email
@@ -67,8 +70,7 @@
                        name="email"
                        type="text"
                        class="form-control login-ben"
-                       placeholder="Email"/
-                       value="<?php echo $_SESSION["return_un"];?>">
+                       placeholder="Email"/>
             </div>
 
             <br/>
@@ -80,8 +82,7 @@
                        name="password"
                        type="text"
                        class="form-control login-ben"
-                       placeholder="Password"
-                       value="<?php echo $_SESSION["return_pw"];?>" />
+                       placeholder="Password"/>
             </div>
 
             <br/><br/>
@@ -146,12 +147,3 @@
 
     </body>
 </html>
-
-<?php
-//clear errors - errors will disappear on page reload
-  unset($_SESSION["error_incorrect"]);
-  unset($_SESSION["error_missing"]);
-  unset($_SESSION["error_nouser"]);
-  unset($_SESSION["return_un"]);
-  unset($_SESSION["return_pw"]);
-?>

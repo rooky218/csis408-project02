@@ -29,6 +29,24 @@ When viewing other users, other infomation will be displayed, with buttons to Me
 
     $whotheyare = $_GET["user"];
     $roomID = $_GET["room"];
+    $return = $_GET["page"]; //return to main
+    $theirZip = getZip($whotheyare);
+    $theirLocation = getLocation($theirZip);
+
+    if($return != null){
+      $roomID = "newmessage.php";
+    } else {
+      $roomID = "other_list.php?room=". $roomID;
+    }
+
+    //find initials
+    $initial_first = getFirstname($whotheyare);
+    $initial_last = getLastname($whotheyare);
+    ucwords($initial_first);
+    ucwords($initial_last);
+    $initial_first = substr($initial_first, 0, 1);
+    $initial_last = substr($initial_last, 0, 1);
+    $initials_full = $initial_first . $initial_last;
 
     //if not logged in add header
     $title = getFullname($whotheyare); //set page title
@@ -50,7 +68,7 @@ When viewing other users, other infomation will be displayed, with buttons to Me
         <br/>
         <!-- back to last page icon link -->
         <a class="glyphicon glyphicon-chevron-left ben-back-icon"
-           href="../Main/convo_dynamic.php?room=<?php echo $roomID;?>"
+           href="../Main/<?php echo $roomID;?>"
            style="position: absolute;
                   top: 40px;
                   left: 7%;
@@ -60,14 +78,32 @@ When viewing other users, other infomation will be displayed, with buttons to Me
 
         <h3 class="">Profile</h3>
 
-        <img src="../includes/photos/default-user.png"
-            height="125px"
-            width="125px"
-            class="img-circle">
+        <br/><br/>
+
+        <div style='width: 100px;
+        height: 100px;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #77E9F3;
+        text-align: center;
+        border-radius: 50%;
+        -webkit-border-radius: 50%;
+        -moz-border-radius: 50%;
+        '>
+          <span
+          style='position: relative;
+          top: 9px;
+          font-size: 45pt;
+          font-weight: bolder;
+          color: #fff;
+          '><?php echo $initials_full;?></span>
+        </div>
+        <br/>
+
 
         <h2 class=""><?php echo getFullname($whotheyare) . ", " . getAge($whotheyare);?></h2>
 
-        <h5 class=""><?php echo getLocationByUser($whotheyare);?></h5>
+        <h5 class=""><?php echo $theirLocation?></h5>
 
         </div><!-- end content container -->
 
@@ -93,44 +129,12 @@ When viewing other users, other infomation will be displayed, with buttons to Me
         <!-- Message User -->
         <div class="media" style="padding: 0 20px 0 20px; color: white">
         <div class="media-body">
-        <h4><a href='#help' style='color: white;'>Message</a></h4>
+        <h4><a href='start_convo.php?user=<?php echo $whotheyare;?>' style='color: white;'>Message</a></h4>
         </div>
         <div class="media-right media-top">
-        <a href='#help' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-comment"></i></h4></a>
+        <a href='start_convo.php?user=<?php echo $whotheyare;?>' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-comment"></i></h4></a>
         </div>
         </div>
-
-        <!-- Add Friend -->
-        <div class="media" style="padding: 0 20px 0 20px; color: white">
-        <div class="media-body">
-        <h4><a href='#help' style='color: white;'>Add to Contacts</a></h4>
-        </div>
-        <div class="media-right media-top">
-        <a href='#help' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-plus"></i></h4></a>
-        </div>
-        </div>
-
-        <!-- Report User -->
-        <div class="media" style="padding: 0 20px 0 20px; color: white">
-        <div class="media-body">
-        <h4><a href='#help' style='color: white;'>Report User</a></h4>
-        </div>
-        <div class="media-right media-top">
-        <a href='#help' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-info-sign"></i></h4></a>
-        </div>
-        </div>
-
-        <!-- Help -->
-        <div class="media" style="padding: 0 20px 0 20px; color: white">
-        <div class="media-body">
-        <h4><a href='#feedback' style='color: white;'>Block User</a></h4>
-        </div>
-        <div class="media-right media-top">
-        <a href='#feedback' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-remove-sign"></i></h4></a>
-        </div>
-        </div>
-        <br/>
-
 
       </div><!-- end container -->
 

@@ -1,17 +1,23 @@
 <?php
   session_start();
 
-  //check if already logged in send to main
-  if($_SESSION["LOGGED_IN"] == true){
-    //header("location: ./../includes/headers/header_main.php");
-  }
+    //check if already logged in send to main
+    if($_SESSION["LOGGED_IN"] == true){
+      header("location: ./../Main/main_dynamic.php");
+    }
+
+    //load functions
+    require("../includes/PHP/functions.php");
+
+    //load DB
+    require("../includes/PHP/DB/dblogin_final.php");
+
+    //load Queries
+    require("../includes/PHP/DB/profile_settings/set_get.php");
 
     //if not logged in add header
     $title = "Sign Up";
     require("../includes/headers/header_main.php");
-
-    //load functions
-    require("../includes/PHP/functions.php");
 
     //reset variables, if page is reloaded this will clear out values
     $invalid_name = false; //return for non-letters
@@ -25,20 +31,28 @@
     $lastNameIn = $_POST["lName"];
     $phoneIn = $_POST["phone"];
     $zipIn = $_POST["zipCode"];
+    $bdmonth = $_POST["bd-month"];
+    $bdday = $_POST["bd-day"];
+    $bdyear = $_POST["bd-year"];
 
 
     //this is pre-validation format for testing. Validation logic starts on line 71
     if(myisset($firstNameIn)
     && myisset($lastNameIn)
     && myisset($phoneIn)
-    && myisset($zipIn)){
+    && myisset($zipIn)
+    && myisset($bdmonth)
+    && myisset($bdday)
+    && myisset($bdyear)){
       $_SESSION["firstNameInS"] = $firstNameIn;
       $_SESSION["lastnameInS"] = $lastNameIn;
       $_SESSION["phoneInS"] = $phoneIn;
       $_SESSION["zipInS"] = $zipIn;
+      $birthdate = $bdyear . "-" . $bdmonth . "-" . $bdday;
+      $_SESSION["birthdayInS"] = $birthdate;
 
       //redirect to next page
-      header("location: ./signup_done.php");
+      header("location: ./../verify_p/verify_p_generate.php");
 
     } else {
       //if not all fields are NOT entered, check if any fields were entered
@@ -131,11 +145,11 @@
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
 
-  <body id="sign-bg">
+  <body id="menu-page">
 
       <div class="container" style="padding: 30px;">
 
-            <h2 class="text-center test" style="">Complete your profile</h2>
+            <h2 class="text-center test" style="">Create your profile</h2>
 
             <br/>
 
@@ -174,7 +188,7 @@
                      class="form-control signup-ben"
                      name="phone"
                      value="<?php echo $phoneIn;?>"
-                     placeholder="888-434-7799">
+                     placeholder="8884347799">
 
              <!--Zip Code Input -->
               <label for="zip"
@@ -185,6 +199,56 @@
                      name="zipCode"
                      value="<?php echo $zipIn;?>"
                      placeholder="22603">
+
+            <!-- Update Birthday -->
+            <label class='label-input-style'>Birthday</label>
+                     <div style='display: flex; flex-wrap: nowrap;'>
+                      <select name='bd-month' class='form-control' id='sel1'
+                      style='width: 200px;
+                      height: 40px;
+                      padding: 3px;
+                      margin: 5px;
+                      display: inline-block;
+                      font-size: 14pt;
+                      '><option>Month</option>
+                      "<?php
+                      for($i=1; $i < 13; $i++){
+                        echo"<option value=".$i.">".$i."</option>";
+                      }
+                      ?>"
+                      </select>
+
+                      <select name='bd-day' class='form-control' id='sel2'
+                      style='width: 200px;
+                      height: 40px;
+                      padding: 3px;
+                      margin: 5px;
+                      display: inline-block;
+                      font-size: 14pt;
+                      '>
+                        <option>Day</option>"
+                        <?php
+                        for($i=1; $i < 32; $i++){
+                          echo"<option value=".$i.">".$i."</option>";
+                        }
+                        ?>"</select>
+
+
+                      <select name='bd-year' class='form-control' id='sel3' style='width: 200px;
+                      height: 40px;
+                      padding: 3px;
+                      margin: 5px;
+                      display: inline-block;
+                      font-size: 14pt;
+                      '>
+                      <option>Year</option>"
+                      <?php
+                      for($i=2018; $i > 1949; $i--){
+                        echo"<option value=".$i.">".$i."</option>";
+                      }
+                      ?>"</select>
+                    </div><!-- end birthday box -->
+
 
               <br/><br/>
 
@@ -218,10 +282,7 @@
                     <a class="btn btn-default btn-lg btn-block"
                        href="../Reg/signup.php">Go Back</a> <!-- back to login.php -->
 
-                  <br/>
-                      <!-- Skip Profile link -->
-                      <a style="color: #5fbac2;"
-                         href="../Reg/signup_done.php">Skip</a><br/><br/><br/><br/>
+
                 </div><!-- end text center -->
           </form>
 

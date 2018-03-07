@@ -18,7 +18,6 @@ function checkUsername($value){
   // Run the query.
   $r = @mysqli_query($my_db, $q);
 
-  // If results came back
   if ($r) {
     $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
     $returned = $row["Username"];
@@ -507,8 +506,8 @@ function getEmailV($user = 0){
 
   //build query
   $q =
-  "SELECT Username
-  FROM EmailVerified
+  "SELECT EmailVerified
+  FROM Users
   WHERE UserID = \"$user\";";
 
   // Run the query.
@@ -1183,13 +1182,16 @@ function whoInRoom($roomID){
 
 }//end whoInRoom
 
-function sendMessage($roomID, $message){
+function sendMessage($roomID, $message, $senderID = 0){
   //link to DB
   global $my_db;
 
   //variables
-  $senderID = $_SESSION["userIDInS"];
+  if($senderID == 0){
+    $senderID = $_SESSION["userIDInS"];
+  }
   $now = setDatetime();
+
   //build query
   $q = "INSERT INTO messages (
     TextBody,
@@ -1228,6 +1230,7 @@ function sendMessage($roomID, $message){
     $r = @mysqli_query($my_db, $q); // Run the query.
 
     if ($r) { // If success
+
     } else { //else -- could not access data base or no results back
       // Public message:
 
@@ -1253,8 +1256,8 @@ function createRoom($userID){
   $q =
   "SELECT *
   FROM Chatrooms
-  ORDER BY RoomID
-  DESC LIMIT 1";
+  ORDER BY RoomID DESC
+  LIMIT 1";
 
    $r = @mysqli_query($my_db, $q);
 
@@ -1272,30 +1275,12 @@ function createRoom($userID){
    unset($q);
 
 
-   //build query - return roomID
-   for($i = 0; $i < count($userID); $i++){
-   $q =
-   "INSERT INTO Chatrooms (
-     RowID,
-     RoomID,
-     SentFromID,
-     MessageID)
-     VALUES (
-       NULL,
-       \"$roomID\",
-       \"$userID[$i]\",
-       NULL);";
+   //send message
+    for($i = 0; $i < count($userID); $i++){
+      sendMessage($roomID, "You are now connected", $userID[$i]);
+    }
 
-    $r = @mysqli_query($my_db, $q);
-
-   if($r){
-     return $roomID;
-   } else {
-   //Database no results back
-   echo "<p>" . mysqli_error($my_db) . "<br /><br /> Query: " . $q . '</ p >';
-   echo "DB could not be reached";
-   }
- }
+    header("location: ./convo_dynamic.php?room=" . $roomID);
 
 }
 
@@ -1318,7 +1303,7 @@ function getMessages($roomID, $sender){
   INNER JOIN Messages
   ON Messages.MessageID = Chatrooms.MessageID
   WHERE Messages.RoomID = \"$roomID\"
-  ORDER BY DeliverTime ASC;";
+  ORDER BY MessageID ASC;";
 
 
   $r = @mysqli_query($my_db, $q);
@@ -1351,6 +1336,42 @@ function getMessages($roomID, $sender){
    unset($q);
 }
 
+function getLastMessage($roomID, $sender = 0){
+  //link to DB
+  global $my_db;
+
+  if($user == 0){
+    $user = $_SESSION["userIDInS"];
+  }
+
+  //build query
+  $q =
+  "SELECT Messages.MessageID,
+  Messages.TextBody,
+  Messages.RoomID,
+  Messages.DeliverTime,
+  Chatrooms.SentFromID
+  FROM Chatrooms
+  INNER JOIN Messages
+  ON Messages.MessageID = Chatrooms.MessageID
+  WHERE Messages.RoomID = \"$roomID\"
+  ORDER BY MessageID DESC
+  LIMIT 1;";
+
+
+  $r = @mysqli_query($my_db, $q);
+
+  if($r){
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    return $row["TextBody"];
+  }
+
+
+
+   //unset $q
+   unset($q);
+}
+
 function getRooms($user = 0){
   //link to DB
   global $my_db;
@@ -1372,7 +1393,7 @@ function getRooms($user = 0){
     ON Messages.MessageID = Chatrooms.MessageID
     WHERE Chatrooms.SentFromID = \"$user\"
     GROUP BY RoomID
-    ORDER BY DeliverTime DESC;";
+    ORDER BY MessageID DESC;";
 
   //Run Q
   $r = @mysqli_query($my_db, $q);
@@ -1387,22 +1408,28 @@ function getRooms($user = 0){
     do{
       //find who in room
       $whoIsHere = whoInRoom($row["RoomID"]);
-
-      //create initial bubble
-      $initial_first = getFirstname($whoIsHere[$i]);
-      $initial_last = getLastname($whoIsHere[$i]);
-      ucwords($initial_first);
-      ucwords($initial_last);
-      $initial_first = substr($initial_first, 0, 1);
-      $initial_last = substr($initial_last, 0, 1);
-      $initials_full = $initial_first . $initial_last;
-
+      $counter = 0;
       //Remove primary user from array
       for($i = 0; $i < count($whoIsHere); $i++){
         if($whoIsHere[$i] == $user){
           //$access_allowed = true;
           $whoIsHere[$i] = null;
+        } else {
+          $initial_first = getFirstname($whoIsHere[$i]);
+          $initial_last = getLastname($whoIsHere[$i]);
+          $counter++;
         }
+      }
+
+      //create initial bubble
+      if($counter > 1){
+        $initials_full = "";
+      } else {
+        ucwords($initial_first);
+        ucwords($initial_last);
+        $initial_first = substr($initial_first, 0, 1);
+        $initial_last = substr($initial_last, 0, 1);
+        $initials_full = $initial_first . $initial_last;
       }
 
       //return all names
@@ -1419,6 +1446,8 @@ function getRooms($user = 0){
         }
       }
 
+      $lastMessage = getLastMessage($row["RoomID"]);
+      $lastMessage = substr($lastMessage,0,60);
 
       //output results to page
 
@@ -1447,7 +1476,7 @@ function getRooms($user = 0){
                 </div>
             <div class='media-body' style='color: black;'>
                 <h4 class='media-heading'>". $title ."</h4>
-                <p>". $row["TextBody"] ."</p>
+                <p>". $lastMessage ."</p>
             </div>
             </div>
             </a>";
@@ -1468,11 +1497,184 @@ function getRooms($user = 0){
 
 }
 
+function getUsersByList($roomID){
+    //find who in room
+    $whoIsHere = whoInRoom($roomID);
+    for($i = 0; $i < count($whoIsHere); $i++){
+      //create initial bubble
+      $initial_first = getFirstname($whoIsHere[$i]);
+      $initial_last = getLastname($whoIsHere[$i]);
+      ucwords($initial_first);
+      ucwords($initial_last);
+      $initial_first = substr($initial_first, 0, 1);
+      $initial_last = substr($initial_last, 0, 1);
+      $initials_full = $initial_first . $initial_last;
+
+      //output results to page
+
+      echo "<a href='other_user_dashboard.php?user=" . $whoIsHere[$i] . "&room=".$roomID."'
+          class='list-group-item'
+          style='background-color: rgba(255, 255, 255, 0.85);'>
+            <div class='media'>
+            <div class='media-left'>
+              <div style='width: 40px;
+              height: 40px;
+              margin-top: 7px;
+              background-color: #737373;
+              text-align: center;
+              border-radius: 50%;
+              -webkit-border-radius: 50%;
+              -moz-border-radius: 50%;
+              '>
+                <span
+                style='position: relative;
+                top: 9px;
+                font-size: 14pt;
+                color: #fff;
+                '>
+                " . $initials_full ."</span>
+              </div>
+                </div>
+            <div class='media-body' style='color: black;'>
+                <h4>". getFullname($whoIsHere[$i]) ."</h4>
+            </div>
+            </div>
+            </a>";
+
+
+    }
+
+
+  //unset variables
+  unset($i);
+  unset($r);
+  unset($q);
+
+}
+
 function formatDateTime(){
 
 }
 
+function searchUsername($value){
+  //link to DB
+  global $my_db;
 
+  $value = $value . "%";
+
+  //build query
+  $q =
+  "SELECT UserID
+  FROM Users
+  WHERE Username LIKE \"$value\";";
+
+  // Run the query.
+  $r = @mysqli_query($my_db, $q);
+
+  // If results came back
+  if($r){
+    $row = mysqli_fetch_array($r, MYSQLI_ASSOC);
+    do{
+      $userID = $row["UserID"];
+
+      //create initial bubble
+      $initial_first = getFirstname($userID);
+      $initial_last = getLastname($userID);
+      ucwords($initial_first);
+      ucwords($initial_last);
+      $initial_first = substr($initial_first, 0, 1);
+      $initial_last = substr($initial_last, 0, 1);
+      $initials_full = $initial_first . $initial_last;
+
+      //output results to page
+
+      echo "<a href='other_user_dashboard.php?user=" . $userID . "&page=0'
+          class='list-group-item'
+          style='background-color: rgba(255, 255, 255, 0.85);'>
+            <div class='media'>
+            <div class='media-left'>
+              <div style='width: 40px;
+              height: 40px;
+              margin-top: 7px;
+              background-color: #737373;
+              text-align: center;
+              border-radius: 50%;
+              -webkit-border-radius: 50%;
+              -moz-border-radius: 50%;
+              '>
+                <span
+                style='position: relative;
+                top: 9px;
+                font-size: 14pt;
+                color: #fff;
+                '>
+                " . $initials_full ."</span>
+              </div>
+                </div>
+            <div class='media-body' style='color: black;'>
+            <h4 class='media-heading'>". getFullname($userID) ."</h4>
+            <p>". getUsername($userID) ."</p>
+            </div>
+            </div>
+            </a>";
+
+    } while($row = mysqli_fetch_array($r));
+  } else {
+    // Public message:
+    echo "<p>We could not access the database</p>";
+    // Debugging message:
+    echo "<p>" . mysqli_error($my_db);
+  }
+
+  //unset $q
+  unset($q);
+  unset($r);
+} //end function
+
+function createUser(){
+
+  //link to DB
+  global $my_db;
+
+  //variables
+  $username = $_SESSION["userNameInS"];
+  $email = $_SESSION["emailInS"];
+  $emailV = $_SESSION["email_V_InS"];
+  $password = $_SESSION["passwordInS"];
+  $fname = $_SESSION["firstNameInS"];
+  $lname = $_SESSION["lastnameInS"];
+  $phone = $_SESSION["phoneInS"];
+  $phoneA = $_SESSION["phone_a_InS"];
+  $zip = $_SESSION["zipInS"];
+  $birthday = $_SESSION["birthdayInS"];
+
+   //build query
+   $q = "INSERT INTO Users
+   (Admin, UserID, CreateDate, EmailVerified, Phone, PhoneA, FirstName, LastName, Username, Email, ZipCode, UserPassword, Location, BirthDate)
+     VALUES
+   (0, NULL, NULL, \"$emailV\", \"$phone\", \"$phoneA\", \"$fname\", \"$lname\", \"$username\", \"$email\", \"$zip\", \"$password\", NULL, \"$birthday\");";
+
+
+   // Run the query.
+   $r = @mysqli_query($my_db, $q);
+
+    // If results came back
+		if ($r){
+      $last_id = mysqli_insert_id($my_db);
+    } else {
+			// Public message:
+   		echo "<p>We could not access the database</p>";
+     	// Debugging message:
+    	echo "<p>" . mysqli_error($my_db);
+		}
+
+
+    //unset $q
+    unset($q);
+    unset($r);
+
+    return $last_id;
+}//end function
 
 
 ?>

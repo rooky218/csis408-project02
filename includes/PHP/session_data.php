@@ -23,19 +23,5 @@ $_SESSION["phoneInS"];
 $_SESSION["phone_a_InS"];
 $_SESSION["zipInS"];
 $_SESSION["passwordInS"]
-
-
-//Load user information into session
-$_SESSION["userNameInS"] = $row["Username"];
-$_SESSION["userIDInS"] = $row["UserID"];
-$_SESSION["emailInS"] = $row["Email"];
-$_SESSION["email_V_InS"] = $row["EmailVerified"];
-$_SESSION["passwordInS"] = $row["Password"];
-$_SESSION["firstNameInS"] = $row["FirstName"];
-$_SESSION["lastnameInS"] = $row["LastName"];
-$_SESSION["phoneInS"] = $row["Phone"];
-$_SESSION["phone_a_InS"] = $row["PhoneA"];
-$_SESSION["zipInS"] = $row["ZipCode"];
-$_SESSION["passwordInS"] = $row["UserPassword"];
-
+$_SESSION["birthdayInS"];
 ?>

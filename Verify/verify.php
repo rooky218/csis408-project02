@@ -1,10 +1,6 @@
 <?php
   session_start();
 
-    //check if already logged in send to main
-    if($_SESSION["LOGGED_IN"] == true){
-
-    }
 
     //if not logged in add header
     $title = "Verify your Email"; //set page title
@@ -13,13 +9,19 @@
     //load functions
     require("../includes/PHP/functions.php");
 
+    //load DB
+    require("../includes/PHP/DB/dblogin_final.php");
+
+    //load Queries
+    require("../includes/PHP/DB/profile_settings/set_get.php");
+
     //set variables
     $user_code = $_POST["confirm_code"];
     $invalid_code = false;
     $change_display = false;
 
     //echo for testing
-    echo "<p class='test'> " . $_SESSION["verify_email"] . "</p>";
+    echo "<p class='test'>Testing only: " . $_SESSION["verify_email"] . "</p>";
 
     //set or add to counter
     //counter counts how many times a user has submitted a code
@@ -43,7 +45,7 @@
         //if user form submitted
         if($_SESSION["verify_email"] == $user_code){
             //if code matched
-            //submit query to DB with verified status
+            $_SESSION["email_V_InS"] = 1;
 
             //unset variables
             unset($_SESSION["verify_email"]);
@@ -72,18 +74,9 @@
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
 
-  <body id="sign-bg">
+  <body id="menu-page">
 
       <div class="container" style="padding: 30px;">
-
-        <!-- back to last page icon link -->
-        <a class="glyphicon glyphicon-chevron-left ben-back-icon"
-           href="#"
-           style="position: absolute;
-                  top: 40px;
-                  left: 20px;
-                  color: #adadad;
-                  font-size: 18pt;"></a>
 
           <?php
               if(!$change_display == true){
@@ -170,11 +163,3 @@
 
   </body>
 </html>
-
-<?php
-  unset($_SESSION["error_incorrect"]);
-  unset($_SESSION["error_missing"]);
-  unset($_SESSION["error_nouser"]);
-  unset($_SESSION["return_un"]);
-  unset($_SESSION["return_pw"]);
-?>

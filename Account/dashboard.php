@@ -8,9 +8,8 @@ When viewing other users, other infomation will be displayed, with buttons to Me
   session_start();
 
     //check if already logged in send to main
-    if($_SESSION["LOGGED_IN"] == true){
-      //header("location: ./../includes/headers/header_main.php");
-      //$_SESSION["Alert_already_logged_in"] = true;
+    if($_SESSION["LOGGED_IN"] != true){
+      header("location: ./../Login/login.php");
     }
 
     //load functions
@@ -40,8 +39,8 @@ When viewing other users, other infomation will be displayed, with buttons to Me
   <body id="menu-page">
 
     <!-- image container -->
-    <div class="account-background"></div><!--blur profile image-->
-    <div class="account-transparent"></div><!-- dark overlay -->
+    <div class="account-background-other"></div><!--blur profile image-->
+    <div class="account-transparent-other"></div><!-- dark overlay -->
 
     <div class="content-container">
         <br/>
@@ -66,7 +65,7 @@ When viewing other users, other infomation will be displayed, with buttons to Me
 
         <h3 class="">Profile</h3>
 
-        <img src="../includes/photos/19884356_10154716410676409_7622955142588271372_n.jpg"
+        <img src="../includes/photos/default-user.png"
             height="125px"
             width="125px"
             class="img-circle">
@@ -103,9 +102,9 @@ When viewing other users, other infomation will be displayed, with buttons to Me
         <?php
         //check if phone set
         if($_SESSION["phoneInS"] == "0"){
-          echo "<a href='settings.php?page=phone-add' style='color: #77E9F3;'>Add phone</a>";
+          echo "<a href='#outoftime' style='color: #77E9F3;'>Add phone</a>";
         } else {
-          echo "<a href='settings.php?page=phone-update' style='color: #77E9F3;'>" . $_SESSION["phoneInS"] . "</a>";
+          echo "<a href='#outoftime' style='color: #77E9F3;'>" . $_SESSION["phoneInS"] . "</a>";
         }
         ?>
         </div>
@@ -128,9 +127,9 @@ When viewing other users, other infomation will be displayed, with buttons to Me
         <?php
         //check if email set
         if($_SESSION["emailInS"] == "0"){
-          echo "<a href='settings.php?page=email-add' style='color: #77E9F3;'>Add email</a>";
+          echo "<a href='#outoftime' style='color: #77E9F3;'>Add email</a>";
         } else {
-          echo "<a href='settings.php?page=email-update' style='color: #77E9F3;'>" . $_SESSION["emailInS"] . "</a>";
+          echo "<a href='#outoftime' style='color: #77E9F3;'>" . $_SESSION["emailInS"] . "</a>";
         }
         ?>
         </div>
@@ -174,10 +173,10 @@ When viewing other users, other infomation will be displayed, with buttons to Me
         <!-- Logout -->
         <div class="media" style="padding: 0 20px 0 20px; color: white">
         <div class="media-body">
-        <h4><a href='#logout' style='color: white;'>Logout</a></h4>
+        <h4><a href='../Login/logout.php' style='color: white;'>Logout</a></h4>
         </div>
         <div class="media-right media-top">
-        <a href='#logout' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-log-out"></i></h4></a>
+        <a href='../Login/logout.php' style="color: #f2f2f2;"><h4><i class="glyphicon glyphicon-log-out"></i></h4></a>
         </div>
         </div>
 

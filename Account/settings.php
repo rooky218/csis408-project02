@@ -422,6 +422,11 @@
 
     //Change password***************************************************
     elseif($pageID == "profile-change"){
+      $bd = getBirthday();
+      $bdyear = substr($bd,0,4);
+      $bdmonth = substr($bd,5,2);
+      $bdday = substr($bd,8,2);
+
       echo "<br/>
       <br/>
       <h3 class='test text-center'>Update your Profile</h3>
@@ -465,8 +470,12 @@
        '><option>Month</option>
        ";
        for($i=1; $i < 13; $i++){
+        if($i == $bdmonth){
+          echo"<option value=".$i." selected>".$i."</option>";
+        } else {
           echo"<option value=".$i.">".$i."</option>";
         }
+      }
        echo "
        </select>
 
@@ -480,7 +489,11 @@
        '>
          <option>Day</option>";
          for($i=1; $i < 32; $i++){
-           echo"<option value=".$i.">".$i."</option>";
+           if($i == $bdday){
+             echo"<option value=".$i." selected>".$i."</option>";
+           } else {
+             echo"<option value=".$i.">".$i."</option>";
+           }
          }
        echo "</select>
 
@@ -494,7 +507,11 @@
        '>
        <option>Year</option>";
        for($i=2018; $i > 1949; $i--){
-         echo"<option value=".$i.">".$i."</option>";
+         if($i == $bdyear){
+           echo"<option value=".$i." selected>".$i."</option>";
+         } else {
+           echo"<option value=".$i.">".$i."</option>";
+         }
        }
        echo "</select>
      </div><!-- end birthday box -->

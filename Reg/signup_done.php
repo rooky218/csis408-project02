@@ -13,28 +13,14 @@
     //load functions
     require("../includes/PHP/functions.php");
 
-    //NOTE: This page will upload all session user data to the database
+    //load DB
+    require("../includes/PHP/DB/dblogin_final.php");
 
+    //load Queries
+    require("../includes/PHP/DB/profile_settings/set_get.php");
 
-    //these values are optional on the second page, run if statement to confirm isset
-    if(myisset($_SESSION["firstNameInS"]
-    && myisset($_SESSION["lastnameInS"]))
-    && myisset($_SESSION["zipInS"])
-    && myisset($_SESSION["phoneInS"])){
-      //if values are set, copy all session to DB
-      $_SESSION["userNameInS"];
-      $_SESSION["emailInS"];
-      $_SESSION["passwordInS"];
-      $_SESSION["firstNameInS"];
-      $_SESSION["lastnameInS"];
-      $_SESSION["zipInS"];
-      $_SESSION["phoneInS"];
-    } else {
-      //if second page skipped, only upload required data
-      $_SESSION["userNameInS"];
-      $_SESSION["emailInS"];
-      $_SESSION["passwordInS"];
-    }
+    $_SESSION["userIDInS"] = createUser();
+
 
  ?>
 
@@ -42,36 +28,34 @@
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
 
-  <body id="sign-bg">
+  <body id="menu-page1">
 
       <div class="container" style="padding: 30px;">
 
           <h2 class="text-center test">Welcome to Chat App!</h2>
           <br/>
 
-          <h4 class="text-center test">What next?</h4>
-
-          <p class="test">We know your time is important, so when you have the time, confirm your email and phone number. This is really important in case you forget your login.</p>
-
-          <br/>
-
           <?php
               //output session data to confirm all user input.
               //testing purposes only, not included in final
-              echo "User input <br/><p class='test'>" .
-              "Username: " . $_SESSION["userNameInS"] . "<br/>" .
-                "Email: " . $_SESSION["emailInS"] . "<br/>" .
-                "Password: " . $_SESSION["passwordInS"] ."<br/>" .
-                "First Name: " . $_SESSION["firstNameInS"] . "<br/>" .
-                "Last Name: " . $_SESSION["lastnameInS"] . "<br/>" .
-                "Zip code: " . $_SESSION["zipInS"] . "<br/>" .
-                "Phone: " . $_SESSION["phoneInS"] . "</p>";
+              echo "Username: " . getUsername() . "<br/>";
+              echo "Password: " . getPassword() . "<br/>";
+              echo "Zip: " . getZip() . "<br/>";
+              echo "Location: " . getLocation() . "<br/>";
+              echo "First Name: " . getFirstname() . "<br/>";
+              echo "Last Name: " . getLastname() . "<br/>";
+              echo "Email: " . getEmail() . "<br/>";
+              echo "Email Verified: " . getEmailV() . "<br/>";
+              echo "Phone: " . getPhone() . "<br/>";
+              echo "Phone Verified: " . getPhoneV() . "<br/>";
+              echo "Birthay: " . getBirthday() . "<br/>";
+              echo "User ID: " . $_SESSION["userIDInS"] . "<br/>";
           ?>
 
           <!-- Start Texting -->
           <a id="login-submit"
              class="btn btn-default btn-lg btn-block"
-             href="../Main/main.php">Start Chatting</a> <!-- back to login.php -->
+             href="../Main/main_dynamic.php">Start Chatting</a> <!-- back to login.php -->
 
           <!-- Confirm your phone -->
           <a class="btn btn-default btn-lg btn-block"

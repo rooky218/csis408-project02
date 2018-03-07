@@ -98,7 +98,7 @@ message results here -->
         //set header options
         $back_link = "main_dynamic.php";
         $back_icon = "glyphicon-chevron-left";
-        $options_link = "other_user_dashboard.php?user=". 2 . "&room=". $roomID;
+        $options_link = "other_list.php?room=". $roomID;
         $options_icon = "glyphicon-user";
         $page_title = $title;
         require("../includes/headers/page_topnav.php");
@@ -106,9 +106,7 @@ message results here -->
 
     <div id="convo-container" class="container">
 
-    <?php echo getMessages($roomID, $whoAmI);?>
-
-      </div><!-- end container -->
+    </div><!-- end container -->
 
       <div class="container-fluid">
           <div class="custom-form">
@@ -129,6 +127,32 @@ message results here -->
       </div>
 
 
+      <script>
+
+      var myVar = setInterval(loadMessages, 1000);
+
+    function loadMessages() {
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("convo-container").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET","test4.php?<?php echo "room=" . $roomID . "&user=" . $whoAmI;?>",true);
+        xmlhttp.send();
+    }
+
+    var myVar2 = setInterval(function() {
+      $("html, body").animate({ scrollTop: 9999 }, 'fast');
+    }, 1000);
+
+      </script>
 
     </body>
 </html>

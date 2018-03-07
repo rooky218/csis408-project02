@@ -22,8 +22,7 @@
     $match = false;
 
     //testing only
-    echo "<p class='test'>" . $_SESSION["code_array"][0] . "</p>";
-    $_SESSION["phoneInA"] = 4342197737;
+    echo "<p class='test'>Testing only: " . $_SESSION["code_array"][0] . "</p>";
 
     //set or add to counter
     //counter counts how many times a user has submitted a code
@@ -38,19 +37,13 @@
     }
 
     if($_SESSION['counter_pv'] <= 4){
-
       //if form data submitted...
       if(myisset($user_code)){
-        //if user form submitted
         for($i = 0; $i < 18; $i++){
           //run loop until match is found
           if($_SESSION["code_array"][$i] == $user_code){
             //if match Confirmed
-            $phone_code_confirmed = $_SESSION["code_array"][$i];
-            $phone_address_confirmed = $_SESSION["address_array"][$i];
-            //UPLOAD CONFIRMED TO DB
-            setPhone($_SESSION["temp-phone"]);
-            setPhoneV($phone_address_confirmed);
+            $_SESSION["phone_a_InS"] = $_SESSION["address_array"][$i];
 
             //send to confirm message page
             header("location: ./verify_p_confirm.php");
@@ -85,20 +78,11 @@
 
       <div class="container" style="padding: 30px;">
 
-        <!-- back to last page icon link -->
-        <a class="glyphicon glyphicon-chevron-left ben-back-icon"
-           href="#"
-           style="position: absolute;
-                  top: 40px;
-                  left: 20px;
-                  color: #adadad;
-                  font-size: 18pt;"></a>
-
           <?php
               if(!$change_display == true){
                 //if not locked out
                 echo "<h2 class='text-center test'>
-                Verify Your Email</h2>";
+                Verify Your Phone</h2>";
 
                 echo "<br/>";
 
@@ -117,7 +101,12 @@
 
                 echo "<h4 class='text-center test'>Sorry! You have made too many incorrect attempts.
                   But don't worry, you can always try again tomorrow!
-                </h4>";
+                </h4>
+
+                <br/><br/>
+
+                <a class='btn btn-default btn-lg btn-block'
+                     href='../Reg/signup_profile.php'>Go Back</a>";
               }
           ?>
 
@@ -158,11 +147,17 @@
                         type="submit"
                         class="btn btn-primary btn-lg btn-block">Submit</button>
 
-                      <br/><br/>
+                <a class="btn btn-default btn-lg btn-block"
+                  href="../Reg/signup_profile.php">Go Back</a>
+
+                <br/><br/>
 
                 <div class="text-center">
                   <a style="color: #5fbac2;"
-                      href="verify_generate.php?trouble=yes">Having Trouble?</a>
+                      href="verify_p_generate.php?trouble=yes">Having Trouble?</a>
+                      <br/><br/>
+                      <a style="color: #5fbac2;"
+                          href="../Reg/signup_done.php">Skip</a>
 
                       <br/><br/>
                 </div>
@@ -179,11 +174,3 @@
 
   </body>
 </html>
-
-<?php
-  unset($_SESSION["error_incorrect"]);
-  unset($_SESSION["error_missing"]);
-  unset($_SESSION["error_nouser"]);
-  unset($_SESSION["return_un"]);
-  unset($_SESSION["return_pw"]);
-?>

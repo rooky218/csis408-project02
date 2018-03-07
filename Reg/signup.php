@@ -1,9 +1,9 @@
 <?php
     session_start();
 
-    //check if already logged in redirect to main.php
+    //check if already logged in send to main
     if($_SESSION["LOGGED_IN"] == true){
-        //header("location: ./../Main/main.php");
+      header("location: ./../Main/main_dynamic.php");
     }
 
     //if not logged in add header and set title
@@ -12,7 +12,13 @@
 
     //load functions
     require("../includes/PHP/functions.php");
-    
+
+    //load DB
+    require("../includes/PHP/DB/dblogin_final.php");
+
+    //load Queries
+    require("../includes/PHP/DB/profile_settings/set_get.php");
+
 
     //reset variables, if page is reloaded this will clear out values
     $userNameIn = "";
@@ -40,7 +46,7 @@
         if($password1In == $password2In){
             //if password match, check db if Username is taken
             echo "passwords match";
-            if(1 == 1){
+            if(!checkUsername($userNameIn)){
                 //1 == 1 is a temporary thing, this will be changed out
                 //for a query to check the username availablilty in the database
                 //if username available, save user data into session
@@ -49,7 +55,7 @@
                 $_SESSION["passwordInS"] = $password1In;
 
                 //continue to next page
-                header("location: ./../Reg/signup_profile.php");
+                header("location: ./../Verify/verify_generate.php");
 
             } else {
                 //username taken
@@ -73,7 +79,7 @@
 
 <link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
 
-  <body id="sign-bg">
+  <body id="menu-page">
 
       <div class="container" style="padding: 30px;">
 

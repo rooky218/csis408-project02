@@ -21,22 +21,23 @@ if($_SESSION["LOGGED_IN"] == true){
   require("../includes/headers/header_main.php");
 
 ?>
+<link href="https://fonts.googleapis.com/css?family=Roboto:100" rel="stylesheet">
 
 <body id="menu-page" style="color: white;">
   <div class="container" style="padding: 30px;">
 
-    <h3 class='test text-center'>Phone Updated</h3>
+    <h3 class='test text-center'>Phone Verified</h3>
 
     <br/><br/>
 
     <h4 class='test text-center' style='color:#77E9F3;'>
-      <?php echo getPhone();?>
+      <?php echo $_SESSION["phoneInS"]?>
     </h4>
 
     <br/><br/>
 
-    <a class='btn btn-default btn-lg btn-block'
-       href='../Account/dashboard.php'>Done</a>
+    <a style="background-color: #77E9F3; border: none;" class='btn btn-default btn-lg btn-block'
+       href='../Reg/signup_done.php'>Continue</a>
 
      </div><!-- end container -->
 

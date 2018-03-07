@@ -38,6 +38,27 @@ message results here -->
 
 <script src="../includes/JS/convo.js"></script>
 
+<script>
+
+function showHint(str) {
+    if (str.length == 0) {
+        document.getElementById("results").innerHTML = "";
+        return;
+    } else {
+        var xmlhttp = new XMLHttpRequest();
+        xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("results").innerHTML = this.responseText;
+            }
+        };
+        xmlhttp.open("GET", "test5.php?search=" + str, true);
+        xmlhttp.send();
+    }
+}
+
+</script>
+
+
     <body id="main-page"
     style="margin: 110px 0 0 0; background-color: #f2f2f2;"
     onload="setMyBox();">
@@ -52,90 +73,20 @@ message results here -->
         require("../includes/headers/page_no_right.php");
     ?>
 
-    <div class="container-fluid">
-
-      <a href='convo_dynamic.php?room=" . $row1["RoomID"] . "'
-          class='list-group-item'
-          style='background-color: rgba(255, 255, 255, 0.85);'>
-            <div class='media'>
-            <div class='media-left'>
-              <div style='width: 40px;
-              height: 40px;
-              margin-top: 7px;
-              background-color: #737373;
-              text-align: center;
-              border-radius: 50%;
-              -webkit-border-radius: 50%;
-              -moz-border-radius: 50%;
-              '>
-                <span
-                style='position: relative;
-                top: 9px;
-                font-size: 14pt;
-                color: #fff;
-                '>
-                BW</span>
-              </div>
-                </div>
-            <div class='media-body' style='color: black;'>
-                <h4 class='media-heading'>Ben Walker</h4>
-                <p>rooky218</p>
-            </div>
-            </div>
-        </a>
-
-        <a href='convo_dynamic.php?room=" . $row1["RoomID"] . "'
-            class='list-group-item'
-            style='background-color: rgba(255, 255, 255, 0.85);'>
-              <div class='media'>
-              <div class='media-left'>
-                <div style='width: 40px;
-                height: 40px;
-                margin-top: 7px;
-                background-color: #737373;
-                text-align: center;
-                border-radius: 50%;
-                -webkit-border-radius: 50%;
-                -moz-border-radius: 50%;
-                '>
-                  <span
-                  style='position: relative;
-                  top: 9px;
-                  font-size: 14pt;
-                  color: #fff;
-                  '>
-                  BW</span>
-                </div>
-                  </div>
-              <div class='media-body' style='color: black;'>
-                  <h4 class='media-heading'>Ben Walker</h4>
-                  <p>rooky218</p>
-              </div>
-              </div>
-          </a>
-
+    <div id="results" class="container-fluid">
 
     </div><!-- end container -->
 
       <div class="container-fluid" >
           <div class="custom-form-search">
-            <form name="myForm"
-            method="post"
-            action="convo_dynamic.php?room=<?php echo $roomID;?>"
-            class="">
+            <form name="myForm">
               <input type="input" class="form-control"
               id="search-bar"
-              name=""
+              onkeyup="showHint(this.value)"
               placeholder="Type a username">
-
-              <button id="my-button-2" type="submit"
-              class="btn btn-default">Search</button>
-
             </form>
           </div>
       </div>
-
-
 
     </body>
 </html>

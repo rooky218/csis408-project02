@@ -34,7 +34,6 @@ this should lead to main.php. -->
           && $password_login == $passwordDB){
             //IF data matches, login session
 						$_SESSION["LOGGED_IN"] = true;
-						$_SESSION["timeout"] = time();	//sets timer for auto logout
             if($row["Admin"] == 1){
               $_SESSION["AdminAccess"] = true;
             } else {
