@@ -1,5 +1,3 @@
-<!-- This checks POST data from login.php against Database. If login works,
-this should lead to main.php. -->
 <?php
 
 
@@ -70,4 +68,3 @@ this should lead to main.php. -->
     	  echo "<p>" . mysqli_error($my_db) . "<br /><br /> Query: " . $q . '</ p >';
 			  echo "DB could not be reached";
 		}
-?>

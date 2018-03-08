@@ -1,9 +1,3 @@
-<!--
-This is the user profile view. This is for the user viewing THEIR OWN PROFILE, not other users.
-
-When viewing other users, other infomation will be displayed, with buttons to Message and Add friend
--->
-
 <?php
   session_start();
 

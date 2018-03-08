@@ -1,7 +1,5 @@
-<!-- for new users, this is the second screen/main screen they will see. They will be asked to login or signup -->
-
 <?php
-  session_start();
+session_start();
 
   //check if already logged in
   if($_SESSION["LOGGED_IN"] == true){

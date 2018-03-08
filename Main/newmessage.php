@@ -1,15 +1,5 @@
-<!-- this is the converstion page, lead in from main. Conversation is
-//displayed here. This page will facility connection to DB and output
-message results here -->
-
-
 <?php
-  //need to which room the user is trying to access
-  //confirm that user is allowed to be in room
-  //if yes, load data for user
-  //if no, redirect out
-
-  session_start();
+session_start();
 
   if($_SESSION["LOGGED_IN"] == true){
     //if logged in, redirect to main page
