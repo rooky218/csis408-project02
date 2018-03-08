@@ -16,9 +16,7 @@ session_start();
   //load Queries
   require("../includes/PHP/DB/profile_settings/set_get.php");
 
-  //Set Page title and load header
-  $title = "Login"; //set page title
-  require("../includes/headers/header_main.php");
+
 
   //set variables
   $email_login = $_POST["email"]; //this is now checking email
@@ -41,6 +39,10 @@ session_start();
     //return error message - username missing
     $missing_username = true;
   }
+
+  //Set Page title and load header
+  $title = "Login"; //set page title
+  require("../includes/headers/header_main.php");
 
  ?>
 
